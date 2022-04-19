@@ -6,10 +6,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import java.awt.Color;
+import javax.swing.BoxLayout;
+import java.awt.GridLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.Font;
+import javax.swing.JTable;
 
 public class QuanLyHangHoa {
 
-	private JFrame frame;
+	private JFrame frmQunLKho;
 
 	/**
 	 * Launch the application.
@@ -19,7 +26,7 @@ public class QuanLyHangHoa {
 			public void run() {
 				try {
 					QuanLyHangHoa window = new QuanLyHangHoa();
-					window.frame.setVisible(true);
+					window.frmQunLKho.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -38,11 +45,32 @@ public class QuanLyHangHoa {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 820, 510);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmQunLKho = new JFrame();
+		frmQunLKho.setTitle("Quản lý kho hàng");
+		frmQunLKho.setBounds(100, 100, 820, 510);
+		frmQunLKho.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JLabel lblNewLabel = new JLabel("Hàng hóa");
-		frame.getContentPane().add(lblNewLabel, BorderLayout.NORTH);
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
+		frmQunLKho.getContentPane().add(panel, BorderLayout.CENTER);
+		
+		JLabel lblNewLabel = new JLabel("Danh sách hàng hóa");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNewLabel)
+					.addContainerGap(345, Short.MAX_VALUE))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNewLabel)
+					.addContainerGap(438, Short.MAX_VALUE))
+		);
+		panel.setLayout(gl_panel);
 	}
 }
