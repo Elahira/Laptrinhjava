@@ -7,15 +7,7 @@ public class HangHoa {
 	private int Gia;
 	private int SoLuong;
 	private int MaNCC;
-	
-	public HangHoa(int MaHang, String TenHang, String LoaiHang, int Gia, int SoLuong, int MaNCC) {
-		this.MaHang=MaHang;
-		this.TenHang=TenHang;
-		this.LoaiHang=LoaiHang;
-		this.Gia=Gia;
-		this.SoLuong=SoLuong;
-		this.MaNCC=MaNCC;
-	}
+	private String TenNhaCC;
 	
 	public int getMaHang() {
 		return MaHang;
@@ -63,6 +55,15 @@ public class HangHoa {
 
 	public void setMaNCC(int maNCC) {
 		MaNCC = maNCC;
+	}
+
+	public void setTenNhaCC(String tenNhaCC) {
+		TenNhaCC = tenNhaCC;
+		
+	}
+	
+	public String getTenNhaCC() {
+		return TenNhaCC;
 	}
 
 }

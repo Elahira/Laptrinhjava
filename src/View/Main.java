@@ -54,6 +54,7 @@ public class Main {
 			public void actionPerformed(ActionEvent e) {
 				QuanLyHangHoa qlHangHoa = new QuanLyHangHoa();
 				qlHangHoa.formqlkho();
+				frame.dispose();
 			}
 		});
 		btnKho.setBounds(32, 106, 132, 31);
@@ -112,6 +113,6 @@ public class Main {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 22));
 		lblNewLabel.setBackground(new Color(51, 153, 255));
 		panel_1.add(lblNewLabel);
-		
+
 	}
 }

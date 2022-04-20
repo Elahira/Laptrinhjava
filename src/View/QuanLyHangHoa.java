@@ -12,6 +12,8 @@ import java.awt.GridLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Font;
+import java.awt.Frame;
+
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
@@ -19,7 +21,14 @@ import javax.swing.JButton;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+
+import Controller.DHangHoa;
+import Model.HangHoa;
+
 import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.awt.event.ActionEvent;
 
 public class QuanLyHangHoa {
 
@@ -29,7 +38,9 @@ public class QuanLyHangHoa {
 	private JTextField txtGia;
 	private JTextField txtTenncc;
 	private JTextField txtSoluong;
-	private JTable table;
+	private JTable tbHang;
+	private List<HangHoa> hangHoa;
+	private DefaultTableModel model;
 
 	/**
 	 * Launch the application.
@@ -52,6 +63,7 @@ public class QuanLyHangHoa {
 	 */
 	public QuanLyHangHoa() {
 		initialize();
+		load();
 	}
 
 	/**
@@ -74,19 +86,19 @@ public class QuanLyHangHoa {
 		JButton btnThem = new JButton("Thêm");
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setBackground(new Color(0, 204, 51));
-		btnThem.setBounds(258, 192, 95, 29);
+		btnThem.setBounds(240, 192, 95, 37);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		JButton btnSua = new JButton("Sửa");
 		btnSua.setForeground(Color.WHITE);
 		btnSua.setBackground(new Color(0, 153, 204));
-		btnSua.setBounds(382, 192, 87, 29);
+		btnSua.setBounds(391, 192, 95, 37);
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		JButton btnXoa = new JButton("Xóa");
 		btnXoa.setForeground(Color.WHITE);
 		btnXoa.setBackground(new Color(204, 0, 0));
-		btnXoa.setBounds(487, 192, 95, 29);
+		btnXoa.setBounds(530, 192, 95, 37);
 		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		JPanel panel_1 = new JPanel();
@@ -159,20 +171,53 @@ public class QuanLyHangHoa {
 		panel.add(btnThem);
 		panel.add(btnSua);
 		panel.add(btnXoa);
-		DefaultTableModel model = new DefaultTableModel();
-		Object[] colum = { "Mã hàng", "Tên hàng", "Loại hàng", "Nhà cung cấp", "Giá", "Số lượng" };
-		Object[] row = new Object[0];
-		model.setColumnIdentifiers(colum);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 277, 850, 243);
 		panel.add(scrollPane);
 
-		table = new JTable();
-		scrollPane.setViewportView(table);
+		tbHang = new JTable();
+		
+		tbHang.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Mã hàng", "Tên hàng", "Loại hàng", "Nhà cung cấp", "Giá" , "Số lượng"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		scrollPane.setViewportView(tbHang);
+		
+		model = (DefaultTableModel)tbHang.getModel();
+		
+		JButton btnBack = new JButton("Quay lại");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main main = new Main();
+				main.main(null);
+				frmQunLKho.dispose();
+			}
+		});
+		btnBack.setForeground(Color.WHITE);
+		btnBack.setBackground(new Color(255, 102, 0));
+		btnBack.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnBack.setBounds(10, 16, 109, 29);
+		panel.add(btnBack);
 	}
 
 	private void load() {
-
+		hangHoa = new DHangHoa().getListHH();
+		model.setRowCount(0);
+		for(HangHoa hh:hangHoa) {
+			model.addRow(new Object[] {
+					hh.getMaHang(),hh.getTenHang(),hh.getLoaiHang(),hh.getTenNhaCC(),hh.getGia(),hh.getSoLuong()
+			});
+		}
 	}
 }

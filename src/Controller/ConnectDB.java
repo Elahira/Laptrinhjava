@@ -13,9 +13,9 @@ public class ConnectDB {
 			conn=DriverManager.getConnection(dbUrl, username, password);
 			
 			Statement stmt=conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM HangHoa");
+			ResultSet rs = stmt.executeQuery("select MaHang, TenHang, LoaiHang, TenNhaCC, Gia, SoLuong from HangHoa, NhaCungCap Where HangHoa.MaNCC = NhaCungCap.MaNCC");
 			while(rs.next())
-				System.out.println("mã hàng: " + rs.getInt(1) + " Tên hàng: " + rs.getString(2) + " Loại: " + rs.getString(3));
+				System.out.println("mã hàng: " + rs.getInt("MaHang") + " Tên hàng: " + rs.getString("TenNhaCC") + " Loại: " + rs.getString(3));
 		} catch (Exception e) {
 			System.out.println(e);
 		}
