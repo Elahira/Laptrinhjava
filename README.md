@@ -5,3 +5,5 @@ vào database tạo QLKHO rồi sau đó chạy SQLQuery
 vào file ConnectDB, sửa jdbc:sqlserver://+server name+:1433;DatabaseName=QLKHO;encrypt=true;trustServerCertificate=true;
 
 server name: tên server của SQL
+
+tham khảo: https://youtu.be/ik7QhaRmeqM
