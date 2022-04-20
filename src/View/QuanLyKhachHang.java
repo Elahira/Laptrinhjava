@@ -1,4 +1,4 @@
-package QuanLyKhoHang;
+package View;
 
 import java.awt.EventQueue;
 
@@ -40,7 +40,7 @@ public class QuanLyKhachHang {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		JLabel lblNewLabel = new JLabel("Khach hàng");
 		frame.getContentPane().add(lblNewLabel, BorderLayout.NORTH);
 	}

@@ -1,32 +1,12 @@
-package QuanLyKhoHang;
+package View;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import javax.swing.JTabbedPane;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import java.awt.Font;
-import javax.swing.JMenuItem;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.Color;
-import javax.swing.JButton;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.FlowLayout;
-import javax.swing.JTextArea;
-import javax.swing.BoxLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import Controller.*;
 
 public class Main {
 
@@ -63,69 +43,75 @@ public class Main {
 		frame.setBounds(100, 100, 850, 328);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel panel = new JPanel();
 		panel.setForeground(new Color(0, 0, 0));
 		panel.setBackground(new Color(51, 0, 204));
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
-		
+
 		JButton btnKho = new JButton("Kho hàng");
+		btnKho.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				QuanLyHangHoa qlHangHoa = new QuanLyHangHoa();
+				qlHangHoa.formqlkho();
+			}
+		});
+		btnKho.setBounds(32, 106, 132, 31);
 		btnKho.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnKho.setBackground(Color.WHITE);
-		
+
 		JButton btnNhacc = new JButton("Nhà cung cấp");
+		btnNhacc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNhacc.setBounds(174, 106, 171, 31);
 		btnNhacc.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnNhacc.setBackground(Color.WHITE);
-		
+
 		JButton btnKH = new JButton("Khách Hàng");
+		btnKH.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnKH.setBounds(355, 106, 161, 31);
 		btnKH.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnKH.setBackground(Color.WHITE);
-		
+
 		JButton btnNK = new JButton("Nhập kho");
+		btnNK.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNK.setBounds(526, 106, 132, 31);
 		btnNK.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnNK.setBackground(Color.WHITE);
-		
+
 		JButton btnXK = new JButton("Xuất kho");
+		btnXK.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnXK.setBounds(668, 106, 118, 31);
 		btnXK.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnXK.setBackground(Color.WHITE);
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(32)
-					.addComponent(btnKho)
-					.addGap(33)
-					.addComponent(btnNhacc)
-					.addGap(40)
-					.addComponent(btnKH)
-					.addGap(44)
-					.addComponent(btnNK)
-					.addGap(48)
-					.addComponent(btnXK)
-					.addGap(48))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(106)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnXK)
-						.addComponent(btnNK)
-						.addComponent(btnKH)
-						.addComponent(btnNhacc)
-						.addComponent(btnKho)))
-		);
-		panel.setLayout(gl_panel);
-		
+		panel.setLayout(null);
+		panel.add(btnKho);
+		panel.add(btnNhacc);
+		panel.add(btnKH);
+		panel.add(btnNK);
+		panel.add(btnXK);
+
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(51, 153, 255));
 		frame.getContentPane().add(panel_1, BorderLayout.NORTH);
-		
+
 		JLabel lblNewLabel = new JLabel("Phần mềm quản lý kho hàng");
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 22));
 		lblNewLabel.setBackground(new Color(51, 153, 255));
 		panel_1.add(lblNewLabel);
+		
 	}
 }

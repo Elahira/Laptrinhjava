@@ -1,5 +1,3 @@
 eclipse.preferences.version=1
-encoding//src/QuanLyKhoHang=UTF-8
-encoding//src/QuanLyKhoHang/ConnectDB.java=UTF-8
-encoding//src/QuanLyKhoHang/HangHoa.java=UTF-8
-encoding//src/QuanLyKhoHang/Main.java=UTF-8
+encoding//src/Controller/ConnectDB.java=UTF-8
+encoding//src/View=UTF-8

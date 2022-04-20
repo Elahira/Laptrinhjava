@@ -1,4 +1,4 @@
-package QuanLyKhoHang;
+package Model;
 
 public class HangHoa {
 	private int MaHang;
