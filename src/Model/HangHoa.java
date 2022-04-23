@@ -5,10 +5,9 @@ public class HangHoa {
 	private String TenHang;
 	private String LoaiHang;
 	private int Gia;
-	private int SoLuong;
 	private int MaNCC;
 	private String TenNhaCC;
-	
+
 	public int getMaHang() {
 		return MaHang;
 	}
@@ -41,14 +40,6 @@ public class HangHoa {
 		Gia = gia;
 	}
 
-	public int getSoLuong() {
-		return SoLuong;
-	}
-
-	public void setSoLuong(int soLuong) {
-		SoLuong = soLuong;
-	}
-
 	public int getMaNCC() {
 		return MaNCC;
 	}
@@ -59,9 +50,9 @@ public class HangHoa {
 
 	public void setTenNhaCC(String tenNhaCC) {
 		TenNhaCC = tenNhaCC;
-		
+
 	}
-	
+
 	public String getTenNhaCC() {
 		return TenNhaCC;
 	}

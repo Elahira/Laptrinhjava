@@ -290,3 +290,9 @@ values
 (N'Nguyễn Văn A', '0238590234', N'23 Bạch Đằng', 'A@gmail.com'),
 (N'Bạch Thái B', '0982239746', N'677 Nguyễn Tri Phương', 'B@gmail.com'),
 (N'Chạnh Nhu C', '0797229384', N'40 Nguyễn Văn Cừ', 'C@gmail.com')
+
+insert into KhoHang(TenKho, STT)
+values
+(N'Kho số 1', '1'),
+(N'Kho số 2', '2'),
+(N'Kho số 3', '3')

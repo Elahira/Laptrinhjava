@@ -2,5 +2,6 @@ eclipse.preferences.version=1
 encoding//src/Controller=UTF-8
 encoding//src/Controller/ConnectDB.java=UTF-8
 encoding//src/Controller/DHangHoa.java=UTF-8
+encoding//src/Controller/DKhachHang.java=UTF-8
 encoding//src/Model=UTF-8
 encoding//src/View=UTF-8
