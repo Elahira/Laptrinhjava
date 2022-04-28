@@ -6,27 +6,14 @@ import java.util.ArrayList;
 import Model.NhaCungCap;
 
 public class DNhaCungCap {
-	private Connection conn;
-
-	public DNhaCungCap() {
-		try {
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			String dbUrl = "jdbc:sqlserver://DESKTOP-AT03SVL\\SQLEXPRESS:1433;DatabaseName=QLKHO;encrypt=true;trustServerCertificate=true;";
-			String username = "sa";
-			String password = "123456";
-			conn = DriverManager.getConnection(dbUrl, username, password);
-
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
+	ConnectDB connectDB = new ConnectDB();
 
 	// load data nhà cung cấp
 	public ArrayList<NhaCungCap> getListNCC() {
 		ArrayList<NhaCungCap> list = new ArrayList<>();
 		String sql = "select MaNCC, TenNhaCC, SDT, DiaChi, Email from NhaCungCap";
 		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				NhaCungCap ncc = new NhaCungCap();
@@ -47,7 +34,7 @@ public class DNhaCungCap {
 	public boolean themNCC(NhaCungCap ncc) {
 		String sql = "insert into NhaCungCap (TenNhaCC, SDT, DiaChi, Email) values (?,?,?,?)";
 		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
 			ps.setString(1, ncc.getTenNhaCC());
 			ps.setString(2, ncc.getSDT());
 			ps.setString(3, ncc.getDiaChi());
@@ -63,7 +50,7 @@ public class DNhaCungCap {
 	public boolean xoaNCC(int mancc) {
 		String sql = "delete from NhaCungCap where MaNCC=?";
 		try {
-			PreparedStatement ps = conn.prepareCall(sql);
+			PreparedStatement ps = connectDB.conn.prepareCall(sql);
 			ps.setInt(1, mancc);
 			ps.executeUpdate();
 		} catch (Exception e) {
@@ -76,7 +63,7 @@ public class DNhaCungCap {
 	public boolean suaNCC(NhaCungCap ncc) {
 		String sql = "update NhaCungCap set TenNhaCC = ?, SDT = ?, Email = ?, DiaChi = ? where MaNCC = ?";
 		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
 			ps.setString(1, ncc.getTenNhaCC());
 			ps.setString(2, ncc.getSDT());
 			ps.setString(3, ncc.getEmail());
@@ -94,7 +81,7 @@ public class DNhaCungCap {
 		int id = 0;
 		String sql = "select MaNCC from NhaCungCap where TenNhaCC = ?";
 		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
 			ps.setString(1, tenncc);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {

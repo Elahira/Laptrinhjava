@@ -21,6 +21,7 @@ public class Main {
 				try {
 					Main window = new Main();
 					window.frmMainMenu.setVisible(true);
+					new ConnectDB().connectDB(); //kết nối database
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

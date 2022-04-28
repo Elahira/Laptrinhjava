@@ -10,27 +10,15 @@ import java.util.ArrayList;
 import Model.HangHoa;
 
 public class DHangHoa {
-	private Connection conn;
-
-	public DHangHoa() {
-		try {
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			String dbUrl = "jdbc:sqlserver://DESKTOP-AT03SVL\\SQLEXPRESS:1433;DatabaseName=QLKHO;encrypt=true;trustServerCertificate=true;";
-			String username = "sa";
-			String password = "123456";
-			conn = DriverManager.getConnection(dbUrl, username, password);
-
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
+	
+	ConnectDB connectDB = new ConnectDB();
 
 	// load data hàng hóa
 	public ArrayList<HangHoa> getListHH() {
 		ArrayList<HangHoa> list = new ArrayList<>();
 		String sql = "select MaHang, TenHang, LoaiHang, TenNhaCC, Gia from HangHoa, NhaCungCap Where HangHoa.MaNCC = NhaCungCap.MaNCC";
 		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				HangHoa hh = new HangHoa();
@@ -51,7 +39,7 @@ public class DHangHoa {
 	public boolean themHH(HangHoa hh) {
 		String sql = "insert into HangHoa (TenHang, LoaiHang, MaNCC, Gia) values (?,?,?,?)";
 		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
 			ps.setString(1, hh.getTenHang());
 			ps.setString(2, hh.getLoaiHang());
 			ps.setInt(3, hh.getMaNCC());
@@ -67,7 +55,7 @@ public class DHangHoa {
 	public boolean xoaHH(int mahh) {
 		String sql = "delete from HangHoa where MaHang=?";
 		try {
-			PreparedStatement ps = conn.prepareCall(sql);
+			PreparedStatement ps = connectDB.conn.prepareCall(sql);
 			ps.setInt(1, mahh);
 			ps.executeUpdate();
 		} catch (Exception e) {
@@ -80,7 +68,7 @@ public class DHangHoa {
 	public boolean suaHH(HangHoa hh) {
 		String sql = "update HangHoa set TenHang = ?, LoaiHang = ?, MaNCC = ?, Gia = ? where MaHang = ?";
 		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
 			ps.setString(1, hh.getTenHang());
 			ps.setString(2, hh.getLoaiHang());
 			ps.setInt(3, hh.getMaNCC());
