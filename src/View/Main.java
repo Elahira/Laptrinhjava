@@ -91,6 +91,9 @@ public class Main {
 		JButton btnNK = new JButton("Nhập kho");
 		btnNK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				QuanLyNhapKho qlnkho = new QuanLyNhapKho();
+				qlnkho.frmqlnkho();
+				frmMainMenu.dispose();
 			}
 		});
 		btnNK.setBounds(613, 157, 132, 31);
@@ -100,6 +103,9 @@ public class Main {
 		JButton btnXK = new JButton("Xuất kho");
 		btnXK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				QuanLyXuatKho qlnkho = new QuanLyXuatKho();
+				qlnkho.frmqlxkho();
+				frmMainMenu.dispose();
 			}
 		});
 		btnXK.setBounds(613, 63, 118, 31);
