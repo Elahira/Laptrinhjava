@@ -90,7 +90,7 @@ public class QuanLyXuatKho {
 			new Object[][] {
 			},
 			new String[] {
-				"Mã Xuất Kho", "Ngày Xuất", "Tổng ti�?n", "Mã Kho"
+				"Mã Xuất Kho", "Ngày Xuất", "Tổng tiền", "Mã Kho"
 			}
 		));
 		tbXuatkho.setFont(new Font("Dialog", Font.PLAIN, 14));

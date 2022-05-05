@@ -129,7 +129,7 @@ public class QuanLyKhachHang {
 		txtSdt.setBounds(517, 29, 140, 25);
 		panelThongtin.add(txtSdt);
 
-		JLabel lblNewLabel_1_1 = new JLabel("�?ịa chỉ:");
+		JLabel lblNewLabel_1_1 = new JLabel("Địa chỉ:");
 		lblNewLabel_1_1.setFont(new Font("Roboto", Font.BOLD, 16));
 		lblNewLabel_1_1.setBounds(10, 94, 131, 19);
 		panelThongtin.add(lblNewLabel_1_1);
@@ -168,7 +168,7 @@ public class QuanLyKhachHang {
 			}
 		});
 		tbKH.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Mã khách hàng", "Tên khách hàng", "Số điện thoại", "Email", "�?ịa chỉ" }) {
+				new String[] { "Mã khách hàng", "Tên khách hàng", "Số điện thoại", "Email", "�?ịa chỉ" }) {
 			boolean[] columnEditables = new boolean[] { false, false, false, false, false };
 
 			public boolean isCellEditable(int row, int column) {
@@ -239,7 +239,7 @@ public class QuanLyKhachHang {
 			kh.setEmail(txtEmail.getText());
 			kh.setDiaChi(txtDiachi.getText());
 			if (Dkh.themKH(kh)) {
-				JOptionPane.showMessageDialog(null, "�?ã thêm khách hàng thành công");
+				JOptionPane.showMessageDialog(null, "Đã thêm khách hàng thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Thêm không thành công");
 			}
@@ -255,7 +255,7 @@ public class QuanLyKhachHang {
 			selectedIndex = tbKH.getSelectedRow();
 			KhachHang kh = khachHang.get(selectedIndex);
 			if (Dkh.xoaKH(kh.getMaKH())) {
-				JOptionPane.showMessageDialog(null, "�?ã xóa khách hàng thành công");
+				JOptionPane.showMessageDialog(null, "Đã xóa thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Xóa không thành công");
 			}
@@ -275,7 +275,7 @@ public class QuanLyKhachHang {
 			kh.setEmail(txtEmail.getText());
 			kh.setDiaChi(txtDiachi.getText());
 			if (Dkh.suaKH(kh)) {
-				JOptionPane.showMessageDialog(null, "�?ã sửa khách hàng thành công");
+				JOptionPane.showMessageDialog(null, "Đã sửa khách hàng thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Sửa không thành công");
 			}
@@ -285,9 +285,9 @@ public class QuanLyKhachHang {
 		}
 	}
 
-	// ch�?n dòng trong table rồi hiển thị lên các textfield
+	// ch�?n dòng trong table rồi hiển thị lên các textfield
 	public void cellClick() {
-		selectedIndex = tbKH.getSelectedRow(); // lấy vị trí của dòng hiện đang được ch�?n trong table
+		selectedIndex = tbKH.getSelectedRow(); // lấy vị trí của dòng hiện đang được ch�?n trong table
 		KhachHang kh = khachHang.get(selectedIndex); // lấy giá trị tại vị trí đó
 		txtTenKh.setText(kh.getTenKH());
 		txtSdt.setText(kh.getSDT());

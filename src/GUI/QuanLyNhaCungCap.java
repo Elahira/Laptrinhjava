@@ -139,7 +139,7 @@ public class QuanLyNhaCungCap {
 			}
 		});
 
-		JLabel lblNewLabel_1_1 = new JLabel("�?ịa chỉ:");
+		JLabel lblNewLabel_1_1 = new JLabel("Địa chỉ:");
 		lblNewLabel_1_1.setFont(new Font("Roboto", Font.BOLD, 16));
 		lblNewLabel_1_1.setBounds(10, 94, 131, 19);
 		panelThongtin.add(lblNewLabel_1_1);
@@ -178,7 +178,7 @@ public class QuanLyNhaCungCap {
 			}
 		});
 		tbNhacc.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Mã nhà cung cấp", "Tên nhà cung cấp", "số điện thoại", "Email", "�?ịa chỉ" }) {
+				new String[] { "Mã nhà cung cấp", "Tên nhà cung cấp", "số điện thoại", "Email", "�?ịa chỉ" }) {
 			boolean[] columnEditables = new boolean[] { false, false, false, false, false };
 
 			public boolean isCellEditable(int row, int column) {
@@ -249,7 +249,7 @@ public class QuanLyNhaCungCap {
 			ncc.setEmail(txtEmail.getText());
 			ncc.setDiaChi(txtDiachi.getText());
 			if (Dncc.themNCC(ncc)) {
-				JOptionPane.showMessageDialog(null, "�?ã thêm nhà cung cấp thành công");
+				JOptionPane.showMessageDialog(null, "Đã thêm nhà cung cấp thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Thêm không thành công");
 			}
@@ -265,7 +265,7 @@ public class QuanLyNhaCungCap {
 			selectedIndex = tbNhacc.getSelectedRow();
 			NhaCungCap ncc = nhaCungCap.get(selectedIndex);
 			if (Dncc.xoaNCC(ncc.getMaNCC())) {
-				JOptionPane.showMessageDialog(null, "�?ã xóa nhà cung cấp thành công");
+				JOptionPane.showMessageDialog(null, "Đã xóa nhà cung cấp thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Xóa không thành công");
 			}
@@ -285,7 +285,7 @@ public class QuanLyNhaCungCap {
 			ncc.setEmail(txtEmail.getText());
 			ncc.setDiaChi(txtDiachi.getText());
 			if (Dncc.suaNCC(ncc)) {
-				JOptionPane.showMessageDialog(null, "�?ã sửa nhà cung cấp thành công");
+				JOptionPane.showMessageDialog(null, "Đã sửa nhà cung cấp thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Sửa không thành công");
 			}
@@ -295,9 +295,9 @@ public class QuanLyNhaCungCap {
 		}
 	}
 
-	// ch�?n dòng trong table rồi hiển thị lên các textfield
+	// ch�?n dòng trong table rồi hiển thị lên các textfield
 	public void cellClick() {
-		selectedIndex = tbNhacc.getSelectedRow(); // lấy vị trí của dòng hiện đang được ch�?n trong table
+		selectedIndex = tbNhacc.getSelectedRow(); // lấy vị trí của dòng hiện đang được ch�?n trong table
 		NhaCungCap ncc = nhaCungCap.get(selectedIndex); // lấy giá trị tại vị trí đó
 		txtTenncc.setText(ncc.getTenNhaCC());
 		txtSdt.setText(ncc.getSDT());

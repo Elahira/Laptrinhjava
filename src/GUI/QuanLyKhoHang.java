@@ -226,7 +226,7 @@ public class QuanLyKhoHang {
 				kho.setTenKho(txtTenkho.getText());
 				kho.setSTT(Integer.parseInt(txtStt.getText()));
 				if (Dkho.themKho(kho)) {
-					JOptionPane.showMessageDialog(null, "�?ã thêm kho hàng thành công");
+					JOptionPane.showMessageDialog(null, "Đã thêm kho hàng thành công");
 				} else {
 					JOptionPane.showMessageDialog(null, "Thêm không thành công");
 				}
@@ -242,7 +242,7 @@ public class QuanLyKhoHang {
 				selectedIndex = tbKhohang.getSelectedRow();
 				KhoHang kho = khoHang.get(selectedIndex);
 				if (Dkho.xoaKho(kho.getMaKho())) {
-					JOptionPane.showMessageDialog(null, "�?ã xóa kho hàng thành công");
+					JOptionPane.showMessageDialog(null, "Đã xóa kho hàng thành công");
 				} else {
 					JOptionPane.showMessageDialog(null, "Xóa không thành công");
 				}
@@ -259,7 +259,7 @@ public class QuanLyKhoHang {
 				kho.setTenKho(txtTenkho.getText());
 				kho.setSTT(Integer.parseInt(txtStt.getText()));
 				if (Dkho.suaKho(kho)) {
-					JOptionPane.showMessageDialog(null, "�?ã sửa kho hàng thành công");
+					JOptionPane.showMessageDialog(null, "Đã sửa kho hàng thành công");
 				} else {
 					JOptionPane.showMessageDialog(null, "Sửa không thành công");
 				}
@@ -269,9 +269,9 @@ public class QuanLyKhoHang {
 			}
 		}
 
-		// ch�?n dòng trong table rồi hiển thị lên các textfield
+		// ch�?n dòng trong table rồi hiển thị lên các textfield
 		public void cellClick() {
-			selectedIndex = tbKhohang.getSelectedRow(); // lấy vị trí của dòng hiện đang được ch�?n trong table
+			selectedIndex = tbKhohang.getSelectedRow(); // lấy vị trí của dòng hiện đang được ch�?n trong table
 			KhoHang kho = khoHang.get(selectedIndex); // lấy giá trị tại vị trí đó
 			txtTenkho.setText(kho.getTenKho());
 			txtStt.setText(String.valueOf(kho.getSTT()));

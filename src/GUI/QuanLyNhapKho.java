@@ -91,7 +91,7 @@ public class QuanLyNhapKho {
 			new Object[][] {
 			},
 			new String[] {
-				"Mã Nhập Kho", "Ngày Nhập", "Tổng ti�?n", "Mã Kho"
+				"Mã Nhập Kho", "Ngày Nhập", "Tổng tiền", "Mã Kho"
 			}
 		));
 		tbNhapkho.setFont(new Font("Dialog", Font.PLAIN, 14));

@@ -268,7 +268,7 @@ public class QuanLyHangHoa {
 			hh.setGia(Integer.parseInt(txtGia.getText()));
 			hh.setMaNCC(Dncc.getmaNCC(cbNhacc.getSelectedItem().toString()));
 			if (Dhh.themHH(hh)) {
-				JOptionPane.showMessageDialog(null, "�?ã thêm hàng hóa thành công");
+				JOptionPane.showMessageDialog(null, "Đã thêm hàng hóa thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Thêm không thành công");
 			}
@@ -285,7 +285,7 @@ public class QuanLyHangHoa {
 			selectedIndex = tbHang.getSelectedRow();
 			HangHoa hh = hangHoa.get(selectedIndex);
 			if (Dhh.xoaHH(hh.getMaHang())) {
-				JOptionPane.showMessageDialog(null, "�?ã xóa hàng hóa thành công");
+				JOptionPane.showMessageDialog(null, "Đã xóa hàng hóa thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Xóa không thành công");
 			}
@@ -306,7 +306,7 @@ public class QuanLyHangHoa {
 			hh.setMaNCC(Dncc.getmaNCC(cbNhacc.getSelectedItem().toString()));
 			hh.setGia(Integer.parseInt(txtGia.getText()));
 			if (Dhh.suaHH(hh)) {
-				JOptionPane.showMessageDialog(null, "�?ã sửa hàng hóa thành công");
+				JOptionPane.showMessageDialog(null, "Đã sửa thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Sửa không thành công");
 			}
@@ -317,9 +317,9 @@ public class QuanLyHangHoa {
 		}
 	}
 
-	// ch�?n dòng trong table rồi hiển thị lên các textfield
+	// ch�?n dòng trong table rồi hiển thị lên các textfield
 	public void cellClick() {
-		selectedIndex = tbHang.getSelectedRow(); // lấy vị trí của dòng hiện đang được ch�?n trong table
+		selectedIndex = tbHang.getSelectedRow(); // lấy vị trí của dòng hiện đang được ch�?n trong table
 		HangHoa hh = hangHoa.get(selectedIndex); // lấy giá trị tại vị trí đó
 		txtTenhang.setText(hh.getTenHang());
 		txtLoai.setText(hh.getLoaiHang());
