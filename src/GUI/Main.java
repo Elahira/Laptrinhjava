@@ -1,12 +1,14 @@
-package View;
+package GUI;
 
 import java.awt.EventQueue;
 
 import javax.swing.*;
+
+import DAO.*;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import Controller.*;
 
 public class Main {
 
@@ -135,7 +137,7 @@ public class Main {
 		panel_1.setBackground(new Color(51, 153, 255));
 		frmMainMenu.getContentPane().add(panel_1, BorderLayout.NORTH);
 
-		JLabel lblNewLabel = new JLabel("Phần mềm quản lý kho hàng");
+		JLabel lblNewLabel = new JLabel("Phần m�?m quản lý kho hàng");
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Roboto Bk", Font.BOLD, 22));

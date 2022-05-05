@@ -1,4 +1,4 @@
-package Controller;
+package DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,8 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import Model.KhoHang;
-import Model.NhaCungCap;
+import DTO.KhoHang;
+import DTO.NhaCungCap;
 
 public class DKhoHang {
 	ConnectDB connectDB = new ConnectDB();

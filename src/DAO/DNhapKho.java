@@ -1,10 +1,10 @@
-package Controller;
+package DAO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import Model.NhapKho;
+import DTO.NhapKho;
 
 public class DNhapKho {
 	ConnectDB connectDB = new ConnectDB();

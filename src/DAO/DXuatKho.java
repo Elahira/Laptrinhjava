@@ -1,10 +1,10 @@
-package Controller;
+package DAO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import Model.XuatKho;
+import DTO.XuatKho;
 
 public class DXuatKho {
 	ConnectDB connectDB = new ConnectDB();
@@ -16,7 +16,7 @@ public class DXuatKho {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				XuatKho xk = new XuatKho();
-				xk.setMaXK(rs.getInt("MaNK"));
+				xk.setMaXK(rs.getInt("MaXK"));
 				xk.setNgayXuat(rs.getString("NgayXuat"));
 				xk.setTongTien(rs.getInt("TongTien"));
 				xk.setMaKho(rs.getInt("MaKho"));

@@ -1,4 +1,4 @@
-package View;
+package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -13,8 +13,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import Controller.DXuatKho;
-import Model.XuatKho;
+import DAO.DXuatKho;
+import DTO.XuatKho;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -89,7 +90,7 @@ public class QuanLyXuatKho {
 			new Object[][] {
 			},
 			new String[] {
-				"Mã Xuất Kho", "Ngày Xuất", "Tổng tiền", "Mã Kho"
+				"Mã Xuất Kho", "Ngày Xuất", "Tổng ti�?n", "Mã Kho"
 			}
 		));
 		tbXuatkho.setFont(new Font("Dialog", Font.PLAIN, 14));

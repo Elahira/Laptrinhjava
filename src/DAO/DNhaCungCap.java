@@ -1,9 +1,9 @@
-package Controller;
+package DAO;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import Model.NhaCungCap;
+import DTO.NhaCungCap;
 
 public class DNhaCungCap {
 	ConnectDB connectDB = new ConnectDB();

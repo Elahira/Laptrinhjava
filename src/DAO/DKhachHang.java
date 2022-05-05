@@ -1,10 +1,10 @@
-package Controller;
+package DAO;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import Model.KhachHang;
-import Model.NhaCungCap;
+import DTO.KhachHang;
+import DTO.NhaCungCap;
 
 public class DKhachHang {
 	ConnectDB connectDB = new ConnectDB();

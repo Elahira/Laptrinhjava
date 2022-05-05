@@ -1,4 +1,4 @@
-package View;
+package GUI;
 
 import java.awt.EventQueue;
 
@@ -26,10 +26,10 @@ import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Controller.DHangHoa;
-import Controller.DNhaCungCap;
-import Model.HangHoa;
-import Model.NhaCungCap;
+import DAO.DHangHoa;
+import DAO.DNhaCungCap;
+import DTO.HangHoa;
+import DTO.NhaCungCap;
 
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
@@ -268,7 +268,7 @@ public class QuanLyHangHoa {
 			hh.setGia(Integer.parseInt(txtGia.getText()));
 			hh.setMaNCC(Dncc.getmaNCC(cbNhacc.getSelectedItem().toString()));
 			if (Dhh.themHH(hh)) {
-				JOptionPane.showMessageDialog(null, "Đã thêm hàng hóa thành công");
+				JOptionPane.showMessageDialog(null, "�?ã thêm hàng hóa thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Thêm không thành công");
 			}
@@ -285,7 +285,7 @@ public class QuanLyHangHoa {
 			selectedIndex = tbHang.getSelectedRow();
 			HangHoa hh = hangHoa.get(selectedIndex);
 			if (Dhh.xoaHH(hh.getMaHang())) {
-				JOptionPane.showMessageDialog(null, "Đã xóa hàng hóa thành công");
+				JOptionPane.showMessageDialog(null, "�?ã xóa hàng hóa thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Xóa không thành công");
 			}
@@ -306,7 +306,7 @@ public class QuanLyHangHoa {
 			hh.setMaNCC(Dncc.getmaNCC(cbNhacc.getSelectedItem().toString()));
 			hh.setGia(Integer.parseInt(txtGia.getText()));
 			if (Dhh.suaHH(hh)) {
-				JOptionPane.showMessageDialog(null, "Đã sửa hàng hóa thành công");
+				JOptionPane.showMessageDialog(null, "�?ã sửa hàng hóa thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Sửa không thành công");
 			}
@@ -317,9 +317,9 @@ public class QuanLyHangHoa {
 		}
 	}
 
-	// chọn dòng trong table rồi hiển thị lên các textfield
+	// ch�?n dòng trong table rồi hiển thị lên các textfield
 	public void cellClick() {
-		selectedIndex = tbHang.getSelectedRow(); // lấy vị trí của dòng hiện đang được chọn trong table
+		selectedIndex = tbHang.getSelectedRow(); // lấy vị trí của dòng hiện đang được ch�?n trong table
 		HangHoa hh = hangHoa.get(selectedIndex); // lấy giá trị tại vị trí đó
 		txtTenhang.setText(hh.getTenHang());
 		txtLoai.setText(hh.getLoaiHang());

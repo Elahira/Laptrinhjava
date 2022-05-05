@@ -1,25 +1,25 @@
-package Model;
+package DTO;
 
-public class XuatKho {
-	private int MaXK;
-	private String NgayXuat;
+public class NhapKho {
+	private int MaNK;
+	private String NgayNhap;
 	private int TongTien;
 	private int MaKho;
 	
-	public int getMaXK() {
-		return MaXK;
+	public int getMaNK() {
+		return MaNK;
 	}
 	
-	public void setMaXK(int maXK) {
-		MaXK = maXK;
+	public void setMaNK(int maNK) {
+		MaNK = maNK;
 	}
 	
-	public String getNgayXuat() {
-		return NgayXuat;
+	public String getNgayNhap() {
+		return NgayNhap;
 	}
 	
-	public void setNgayXuat(String ngayXuat) {
-		NgayXuat = ngayXuat;
+	public void setNgayNhap(String ngayNhap) {
+		NgayNhap = ngayNhap;
 	}
 	
 	public int getTongTien() {

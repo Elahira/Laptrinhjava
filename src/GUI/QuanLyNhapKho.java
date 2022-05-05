@@ -1,4 +1,4 @@
-package View;
+package GUI;
 
 import java.awt.EventQueue;
 
@@ -14,8 +14,9 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-import Controller.DNhapKho;
-import Model.NhapKho;
+import DAO.DNhapKho;
+import DTO.NhapKho;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -90,7 +91,7 @@ public class QuanLyNhapKho {
 			new Object[][] {
 			},
 			new String[] {
-				"Mã Nhập Kho", "Ngày Nhập", "Tổng tiền", "Mã Kho"
+				"Mã Nhập Kho", "Ngày Nhập", "Tổng ti�?n", "Mã Kho"
 			}
 		));
 		tbNhapkho.setFont(new Font("Dialog", Font.PLAIN, 14));
