@@ -1,7 +1,7 @@
 eclipse.preferences.version=1
-encoding//src/Controller=UTF-8
-encoding//src/Controller/ConnectDB.java=UTF-8
-encoding//src/Controller/DHangHoa.java=UTF-8
-encoding//src/Controller/DKhachHang.java=UTF-8
-encoding//src/Model=UTF-8
-encoding//src/View=UTF-8
+encoding//src/DAO=UTF-8
+encoding//src/DAO/ConnectDB.java=UTF-8
+encoding//src/DAO/DHangHoa.java=UTF-8
+encoding//src/DAO/DKhachHang.java=UTF-8
+encoding//src/DTO=UTF-8
+encoding//src/GUI=UTF-8
