@@ -296,3 +296,11 @@ values
 (N'Kho số 1', '1'),
 (N'Kho số 2', '2'),
 (N'Kho số 3', '3')
+
+insert into KhoHangCT(MaKho, MaHang, SoLuong)
+values
+('1','1','5'),
+('1','2','4'),
+('1','3','7'),
+('2','3','5'),
+('2','2','6')

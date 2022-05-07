@@ -20,14 +20,16 @@ import java.awt.Frame;
 
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.RowFilter;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
-import DAO.DHangHoa;
-import DAO.DNhaCungCap;
+import BUS.BHangHoa;
+import BUS.BNhaCungCap;
 import DTO.HangHoa;
 import DTO.NhaCungCap;
 
@@ -53,8 +55,9 @@ public class QuanLyHangHoa {
 	private DefaultTableModel model;
 	private JComboBox<String> cbNhacc;
 	int selectedIndex;
-	DNhaCungCap Dncc = new DNhaCungCap();
-	DHangHoa Dhh = new DHangHoa();
+	BNhaCungCap Bncc = new BNhaCungCap();
+	BHangHoa Bhh = new BHangHoa();
+	private JTextField txtTimkiem;
 
 	/**
 	 * Launch the application.
@@ -96,7 +99,7 @@ public class QuanLyHangHoa {
 		frmQunlhang.getContentPane().add(panel, BorderLayout.CENTER);
 
 		JLabel lblNewLabel = new JLabel("Danh sách hàng hóa");
-		lblNewLabel.setBounds(30, 239, 162, 22);
+		lblNewLabel.setBounds(10, 244, 162, 22);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		JButton btnThem = new JButton("Thêm");
@@ -238,11 +241,29 @@ public class QuanLyHangHoa {
 		btnBack.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnBack.setBounds(10, 16, 109, 29);
 		panel.add(btnBack);
+		
+		txtTimkiem = new JTextField();
+		txtTimkiem.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				filter(txtTimkiem.getText());
+			}
+		});
+		
+		txtTimkiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtTimkiem.setBounds(317, 244, 245, 24);
+		panel.add(txtTimkiem);
+		txtTimkiem.setColumns(10);
+		
+		JLabel lblNewLabel_4 = new JLabel("Tìm kiếm:");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_4.setBounds(228, 244, 79, 22);
+		panel.add(lblNewLabel_4);
 	}
 
 	// load table
 	private void load() {
-		hangHoa = new DHangHoa().getListHH();
+		hangHoa = Bhh.listHangHoa();
 		model.setRowCount(0);
 		for (HangHoa hh : hangHoa) {
 			model.addRow(
@@ -252,10 +273,17 @@ public class QuanLyHangHoa {
 
 	// load combobox
 	public void loadcombobox() {
-		nhaCungCap = new DNhaCungCap().getListNCC();
+		nhaCungCap = Bncc.listNcc();
 		for (NhaCungCap ncc : nhaCungCap) {
 			cbNhacc.addItem(ncc.getTenNhaCC());
 		}
+	}
+	
+	//tìm kiếm, filter
+	private void filter(String search) {
+		TableRowSorter<DefaultTableModel> tRowSorter = new TableRowSorter<DefaultTableModel>(model);
+		tbHang.setRowSorter(tRowSorter);
+		tRowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + search));
 	}
 
 	// thêm hàng hóa
@@ -266,8 +294,8 @@ public class QuanLyHangHoa {
 			hh.setTenHang(txtTenhang.getText());
 			hh.setLoaiHang(txtLoai.getText());
 			hh.setGia(Integer.parseInt(txtGia.getText()));
-			hh.setMaNCC(Dncc.getmaNCC(cbNhacc.getSelectedItem().toString()));
-			if (Dhh.themHH(hh)) {
+			hh.setMaNCC(Bncc.getMancc(cbNhacc.getSelectedItem().toString()));
+			if (Bhh.themHanghoa(hh)) {
 				JOptionPane.showMessageDialog(null, "Đã thêm hàng hóa thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Thêm không thành công");
@@ -284,7 +312,7 @@ public class QuanLyHangHoa {
 		if (JOptionPane.showConfirmDialog(frmQunlhang, "Bạn có chắc muốn xóa") == JOptionPane.YES_OPTION) {
 			selectedIndex = tbHang.getSelectedRow();
 			HangHoa hh = hangHoa.get(selectedIndex);
-			if (Dhh.xoaHH(hh.getMaHang())) {
+			if (Bhh.xoaHanghoa(hh.getMaHang())) {
 				JOptionPane.showMessageDialog(null, "Đã xóa hàng hóa thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Xóa không thành công");
@@ -303,9 +331,9 @@ public class QuanLyHangHoa {
 			hh.setMaHang(hh.getMaHang());
 			hh.setTenHang(txtTenhang.getText());
 			hh.setLoaiHang(txtLoai.getText());
-			hh.setMaNCC(Dncc.getmaNCC(cbNhacc.getSelectedItem().toString()));
+			hh.setMaNCC(Bncc.getMancc(cbNhacc.getSelectedItem().toString()));
 			hh.setGia(Integer.parseInt(txtGia.getText()));
-			if (Dhh.suaHH(hh)) {
+			if (Bhh.suaHanghoa(hh)) {
 				JOptionPane.showMessageDialog(null, "Đã sửa thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Sửa không thành công");
@@ -317,9 +345,9 @@ public class QuanLyHangHoa {
 		}
 	}
 
-	// ch�?n dòng trong table rồi hiển thị lên các textfield
+	// chọn dòng trong table rồi hiển thị lên các textfield
 	public void cellClick() {
-		selectedIndex = tbHang.getSelectedRow(); // lấy vị trí của dòng hiện đang được ch�?n trong table
+		selectedIndex = tbHang.getSelectedRow(); // lấy vị trí của dòng hiện đang được chọn trong table
 		HangHoa hh = hangHoa.get(selectedIndex); // lấy giá trị tại vị trí đó
 		txtTenhang.setText(hh.getTenHang());
 		txtLoai.setText(hh.getLoaiHang());

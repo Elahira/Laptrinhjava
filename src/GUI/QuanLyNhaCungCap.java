@@ -13,9 +13,12 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
+import BUS.BNhaCungCap;
 import DAO.DHangHoa;
 import DAO.DNhaCungCap;
 import DTO.HangHoa;
@@ -42,7 +45,8 @@ public class QuanLyNhaCungCap {
 	private List<NhaCungCap> nhaCungCap;
 	private DefaultTableModel model;
 	int selectedIndex;
-	DNhaCungCap Dncc = new DNhaCungCap();
+	BNhaCungCap Bncc = new BNhaCungCap();
+	private JTextField txtTimkiem;
 
 	/**
 	 * Launch the application.
@@ -178,7 +182,7 @@ public class QuanLyNhaCungCap {
 			}
 		});
 		tbNhacc.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Mã nhà cung cấp", "Tên nhà cung cấp", "số điện thoại", "Email", "�?ịa chỉ" }) {
+				new String[] { "Mã nhà cung cấp", "Tên nhà cung cấp", "số điện thoại", "Email", "Địa chỉ" }) {
 			boolean[] columnEditables = new boolean[] { false, false, false, false, false };
 
 			public boolean isCellEditable(int row, int column) {
@@ -226,18 +230,43 @@ public class QuanLyNhaCungCap {
 		btnXoa.setFont(new Font("Roboto", Font.BOLD, 16));
 		btnXoa.setBounds(577, 237, 113, 41);
 		panel.add(btnXoa);
+		
+		JLabel lblNewLabel_4 = new JLabel("Tìm kiếm:");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_4.setBounds(230, 296, 79, 22);
+		panel.add(lblNewLabel_4);
+		
+		txtTimkiem = new JTextField();
+		txtTimkiem.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				filter(txtTimkiem.getText());
+			}
+		});
+		txtTimkiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtTimkiem.setColumns(10);
+		txtTimkiem.setBounds(319, 296, 245, 24);
+		panel.add(txtTimkiem);
 
 	}
 
 	// load table
 	public void load() {
-		nhaCungCap = new DNhaCungCap().getListNCC();
+//		nhaCungCap = new DNhaCungCap().getListNCC();
+		nhaCungCap = Bncc.listNcc();
 		model.setRowCount(0);
 		for (NhaCungCap ncc : nhaCungCap) {
 			model.addRow(
 					new Object[] { ncc.getMaNCC(), ncc.getTenNhaCC(), ncc.getSDT(), ncc.getEmail(), ncc.getDiaChi() });
 		}
 	}
+	
+	//tìm kiếm, filter
+		private void filter(String search) {
+			TableRowSorter<DefaultTableModel> tRowSorter = new TableRowSorter<DefaultTableModel>(model);
+			tbNhacc.setRowSorter(tRowSorter);
+			tRowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + search));
+		}
 
 	// thêm nhà cung cấp
 	public void themNCC() {
@@ -248,7 +277,7 @@ public class QuanLyNhaCungCap {
 			ncc.setSDT(txtSdt.getText());
 			ncc.setEmail(txtEmail.getText());
 			ncc.setDiaChi(txtDiachi.getText());
-			if (Dncc.themNCC(ncc)) {
+			if (Bncc.themNhaCungCap(ncc)) {
 				JOptionPane.showMessageDialog(null, "Đã thêm nhà cung cấp thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Thêm không thành công");
@@ -264,7 +293,7 @@ public class QuanLyNhaCungCap {
 		if (JOptionPane.showConfirmDialog(frmQunLNh, "Bạn có chắc muốn xóa") == JOptionPane.YES_OPTION) {
 			selectedIndex = tbNhacc.getSelectedRow();
 			NhaCungCap ncc = nhaCungCap.get(selectedIndex);
-			if (Dncc.xoaNCC(ncc.getMaNCC())) {
+			if (Bncc.xoaNhaCungCap(ncc.getMaNCC())) {
 				JOptionPane.showMessageDialog(null, "Đã xóa nhà cung cấp thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Xóa không thành công");
@@ -284,7 +313,7 @@ public class QuanLyNhaCungCap {
 			ncc.setSDT(txtSdt.getText());
 			ncc.setEmail(txtEmail.getText());
 			ncc.setDiaChi(txtDiachi.getText());
-			if (Dncc.suaNCC(ncc)) {
+			if (Bncc.suaNhaCungCap(ncc)) {
 				JOptionPane.showMessageDialog(null, "Đã sửa nhà cung cấp thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Sửa không thành công");

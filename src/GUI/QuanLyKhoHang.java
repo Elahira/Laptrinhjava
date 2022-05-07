@@ -13,7 +13,10 @@ import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
+import BUS.BKhachHang;
+import BUS.BKhoHang;
 import DAO.DKhachHang;
 import DAO.DKhoHang;
 import DAO.DNhaCungCap;
@@ -21,6 +24,7 @@ import DTO.KhoHang;
 import DTO.NhaCungCap;
 
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
@@ -41,7 +45,8 @@ public class QuanLyKhoHang {
 	private List<KhoHang> khoHang;
 	private DefaultTableModel model;
 	int selectedIndex;
-	DKhoHang Dkho = new DKhoHang();
+	BKhoHang Bkho = new BKhoHang();
+	private JTextField txtTimkiem;
 
 	/**
 	 * Launch the application.
@@ -207,16 +212,40 @@ public class QuanLyKhoHang {
 		btnXoa.setBackground(new Color(255, 51, 51));
 		btnXoa.setBounds(520, 157, 113, 41);
 		panel.add(btnXoa);
+		
+		JLabel lblNewLabel_4 = new JLabel("Tìm kiếm:");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_4.setBounds(190, 250, 79, 22);
+		panel.add(lblNewLabel_4);
+		
+		txtTimkiem = new JTextField();
+		txtTimkiem.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				filter(txtTimkiem.getText());
+			}
+		});
+		txtTimkiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtTimkiem.setColumns(10);
+		txtTimkiem.setBounds(279, 250, 245, 24);
+		panel.add(txtTimkiem);
 	}
 	
 	// load table
 		public void load() {
-			khoHang = new DKhoHang().getListKho();
+			khoHang = Bkho.listKho();
 			model.setRowCount(0);
 			for (KhoHang kho: khoHang) {
 				model.addRow(
 						new Object[] { kho.getMaKho(), kho.getTenKho(), kho.getSTT() });
 			}
+		}
+		
+		//tìm kiếm, filter
+		private void filter(String search) {
+			TableRowSorter<DefaultTableModel> tRowSorter = new TableRowSorter<DefaultTableModel>(model);
+			tbKhohang.setRowSorter(tRowSorter);
+			tRowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + search));
 		}
 
 		// thêm kho hàng
@@ -225,7 +254,7 @@ public class QuanLyKhoHang {
 				KhoHang kho = new KhoHang();
 				kho.setTenKho(txtTenkho.getText());
 				kho.setSTT(Integer.parseInt(txtStt.getText()));
-				if (Dkho.themKho(kho)) {
+				if (Bkho.themKho(kho)) {
 					JOptionPane.showMessageDialog(null, "Đã thêm kho hàng thành công");
 				} else {
 					JOptionPane.showMessageDialog(null, "Thêm không thành công");
@@ -241,7 +270,7 @@ public class QuanLyKhoHang {
 			if (JOptionPane.showConfirmDialog(frmqlkho, "Bạn có chắc muốn xóa") == JOptionPane.YES_OPTION) {
 				selectedIndex = tbKhohang.getSelectedRow();
 				KhoHang kho = khoHang.get(selectedIndex);
-				if (Dkho.xoaKho(kho.getMaKho())) {
+				if (Bkho.xoaKho(kho.getMaKho())) {
 					JOptionPane.showMessageDialog(null, "Đã xóa kho hàng thành công");
 				} else {
 					JOptionPane.showMessageDialog(null, "Xóa không thành công");
@@ -258,7 +287,7 @@ public class QuanLyKhoHang {
 				kho.setMaKho(kho.getMaKho());
 				kho.setTenKho(txtTenkho.getText());
 				kho.setSTT(Integer.parseInt(txtStt.getText()));
-				if (Dkho.suaKho(kho)) {
+				if (Bkho.suaKho(kho)) {
 					JOptionPane.showMessageDialog(null, "Đã sửa kho hàng thành công");
 				} else {
 					JOptionPane.showMessageDialog(null, "Sửa không thành công");

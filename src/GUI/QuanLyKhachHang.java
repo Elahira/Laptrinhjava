@@ -16,10 +16,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
+import BUS.BKhachHang;
 import DAO.DKhachHang;
 import DAO.DNhaCungCap;
 import DTO.KhachHang;
@@ -27,6 +30,8 @@ import DTO.NhaCungCap;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class QuanLyKhachHang {
 
@@ -39,7 +44,8 @@ public class QuanLyKhachHang {
 	private List<KhachHang> khachHang;
 	private DefaultTableModel model;
 	int selectedIndex;
-	DKhachHang Dkh = new DKhachHang();
+	BKhachHang Bkh = new BKhachHang();
+	private JTextField txtTimkiem;
 
 	/**
 	 * Launch the application.
@@ -168,7 +174,7 @@ public class QuanLyKhachHang {
 			}
 		});
 		tbKH.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Mã khách hàng", "Tên khách hàng", "Số điện thoại", "Email", "�?ịa chỉ" }) {
+				new String[] { "Mã khách hàng", "Tên khách hàng", "Số điện thoại", "Email", "Địa chỉ" }) {
 			boolean[] columnEditables = new boolean[] { false, false, false, false, false };
 
 			public boolean isCellEditable(int row, int column) {
@@ -218,16 +224,41 @@ public class QuanLyKhachHang {
 		btnXoa.setBackground(new Color(255, 51, 51));
 		btnXoa.setBounds(577, 237, 113, 41);
 		panel.add(btnXoa);
+		
+		JLabel lblNewLabel_4 = new JLabel("Tìm kiếm:");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_4.setBounds(220, 296, 79, 22);
+		panel.add(lblNewLabel_4);
+		
+		txtTimkiem = new JTextField();
+		txtTimkiem.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				filter(txtTimkiem.getText());
+			}
+		});
+		txtTimkiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtTimkiem.setColumns(10);
+		txtTimkiem.setBounds(309, 296, 245, 24);
+		panel.add(txtTimkiem);
 	}
 
 	// load data
 	public void load() {
-		khachHang = new DKhachHang().getListKH();
+//		khachHang = new DKhachHang().getListKH();
+		khachHang = Bkh.listKhachHang();
 		model.setRowCount(0);
 		for (KhachHang kh : khachHang) {
 			model.addRow(new Object[] { kh.getMaKH(), kh.getTenKH(), kh.getSDT(), kh.getEmail(), kh.getDiaChi() });
 		}
 	}
+	
+	//tìm kiếm, filter
+		private void filter(String search) {
+			TableRowSorter<DefaultTableModel> tRowSorter = new TableRowSorter<DefaultTableModel>(model);
+			tbKH.setRowSorter(tRowSorter);
+			tRowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + search));
+		}
 
 	// thêm khách hàng
 	public void themKH() {
@@ -238,7 +269,7 @@ public class QuanLyKhachHang {
 			kh.setSDT(txtSdt.getText());
 			kh.setEmail(txtEmail.getText());
 			kh.setDiaChi(txtDiachi.getText());
-			if (Dkh.themKH(kh)) {
+			if (Bkh.themKhachHang(kh)) {
 				JOptionPane.showMessageDialog(null, "Đã thêm khách hàng thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Thêm không thành công");
@@ -254,7 +285,7 @@ public class QuanLyKhachHang {
 		if (JOptionPane.showConfirmDialog(frmqlkh, "Bạn có chắc muốn xóa") == JOptionPane.YES_OPTION) {
 			selectedIndex = tbKH.getSelectedRow();
 			KhachHang kh = khachHang.get(selectedIndex);
-			if (Dkh.xoaKH(kh.getMaKH())) {
+			if (Bkh.xoaKhachHang(kh.getMaKH())) {
 				JOptionPane.showMessageDialog(null, "Đã xóa thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Xóa không thành công");
@@ -274,7 +305,7 @@ public class QuanLyKhachHang {
 			kh.setSDT(txtSdt.getText());
 			kh.setEmail(txtEmail.getText());
 			kh.setDiaChi(txtDiachi.getText());
-			if (Dkh.suaKH(kh)) {
+			if (Bkh.suaKhachHang(kh)) {
 				JOptionPane.showMessageDialog(null, "Đã sửa khách hàng thành công");
 			} else {
 				JOptionPane.showMessageDialog(null, "Sửa không thành công");
