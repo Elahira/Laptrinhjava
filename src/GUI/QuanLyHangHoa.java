@@ -224,6 +224,7 @@ public class QuanLyHangHoa {
 				return columnEditables[column];
 			}
 		});
+		tbHang.setRowHeight(30);
 		scrollPane.setViewportView(tbHang);
 
 		model = (DefaultTableModel) tbHang.getModel();

@@ -10,7 +10,7 @@ public class DXuatKho {
 	ConnectDB connectDB = new ConnectDB();
 	public ArrayList<XuatKho> getListXK() {
 		ArrayList<XuatKho> list = new ArrayList<>();
-		String sql = "select MaNK, NgayXuat, TongTien, MaKho from XuatKho";
+		String sql = "select MaXK, NgayXuat, TongTien, MaKho from XuatKho";
 		try {
 			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();

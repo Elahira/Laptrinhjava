@@ -190,7 +190,8 @@ public class QuanLyNhaCungCap {
 			}
 		});
 
-		tbNhacc.setFont(new Font("Roboto", Font.PLAIN, 12));
+		tbNhacc.setFont(new Font("Roboto", Font.PLAIN, 16));
+		tbNhacc.setRowHeight(30);
 		scrollPane.setViewportView(tbNhacc);
 
 		model = (DefaultTableModel) tbNhacc.getModel();

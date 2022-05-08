@@ -181,7 +181,8 @@ public class QuanLyKhachHang {
 				return columnEditables[column];
 			}
 		});
-		tbKH.setFont(new Font("Roboto", Font.PLAIN, 12));
+		tbKH.setFont(new Font("Roboto", Font.PLAIN, 16));
+		tbKH.setRowHeight(30);
 		model = (DefaultTableModel) tbKH.getModel();
 
 		scrollPane.setViewportView(tbKH);

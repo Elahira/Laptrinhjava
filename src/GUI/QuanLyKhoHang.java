@@ -47,6 +47,7 @@ public class QuanLyKhoHang {
 	int selectedIndex;
 	BKhoHang Bkho = new BKhoHang();
 	private JTextField txtTimkiem;
+	public static int xemkho;
 
 	/**
 	 * Launch the application.
@@ -152,6 +153,7 @@ public class QuanLyKhoHang {
 		panel.add(scrollPane);
 		
 		tbKhohang = new JTable();
+		tbKhohang.setBackground(Color.WHITE);
 		tbKhohang.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -166,14 +168,14 @@ public class QuanLyKhoHang {
 				return columnEditables[column];
 			}
 		});
-		tbKhohang.setFont(new Font("Roboto", Font.PLAIN, 14));
+		tbKhohang.setFont(new Font("Roboto", Font.PLAIN, 16));
 		tbKhohang.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				cellClick();
 			}
 		});
-		
+		tbKhohang.setRowHeight(30);
 		model = (DefaultTableModel)tbKhohang.getModel();
 		scrollPane.setViewportView(tbKhohang);
 		
@@ -229,6 +231,18 @@ public class QuanLyKhoHang {
 		txtTimkiem.setColumns(10);
 		txtTimkiem.setBounds(279, 250, 245, 24);
 		panel.add(txtTimkiem);
+		
+		JButton btnXemkho = new JButton("Xem kho");
+		btnXemkho.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				xemKhohang();
+			}
+		});
+		btnXemkho.setForeground(Color.WHITE);
+		btnXemkho.setFont(new Font("Roboto", Font.BOLD, 16));
+		btnXemkho.setBackground(new Color(51, 0, 204));
+		btnXemkho.setBounds(613, 231, 113, 41);
+		panel.add(btnXemkho);
 	}
 	
 	// load table
@@ -298,11 +312,24 @@ public class QuanLyKhoHang {
 			}
 		}
 
-		// ch�?n dòng trong table rồi hiển thị lên các textfield
+		// chọn dòng trong table rồi hiển thị lên các textfield
 		public void cellClick() {
-			selectedIndex = tbKhohang.getSelectedRow(); // lấy vị trí của dòng hiện đang được ch�?n trong table
-			KhoHang kho = khoHang.get(selectedIndex); // lấy giá trị tại vị trí đó
+			selectedIndex = tbKhohang.getSelectedRow(); // lấy vị trí của dòng hiện đang được chọn trong table
+			KhoHang kho = khoHang.get(selectedIndex);// lấy giá trị tại vị trí đó
+			xemkho = kho.getMaKho();
 			txtTenkho.setText(kho.getTenKho());
 			txtStt.setText(String.valueOf(kho.getSTT()));
+		}
+		
+		// xem kho hàng
+		public void xemKhohang() {
+			if(tbKhohang.getSelectedRow()!=-1) {
+				ChiTietKho khoct = new ChiTietKho();
+				khoct.fromkhoct();
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Xin hãy chọn một kho để xem");
+			}
+			
 		}
 }
