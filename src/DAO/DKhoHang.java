@@ -1,13 +1,10 @@
 package DAO;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import DTO.KhoHang;
-import DTO.NhaCungCap;
 
 public class DKhoHang {
 	ConnectDB connectDB = new ConnectDB();
@@ -73,5 +70,19 @@ public class DKhoHang {
 		}
 		return true;
 	}
-
+	public int getmaKho(String tenkho) {
+		int id = 0;
+		String sql = "select MaKho from KhoHang where TenKho = ?";
+		try {
+			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
+			ps.setString(1, tenkho);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				id = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
 }

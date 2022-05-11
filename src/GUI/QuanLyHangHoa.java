@@ -89,7 +89,7 @@ public class QuanLyHangHoa {
 	 */
 	private void initialize() {
 		frmQunlhang = new JFrame();
-		frmQunlhang.setTitle("Quản lý hang hóa");
+		frmQunlhang.setTitle("Quản lý hàng hóa");
 		frmQunlhang.setBounds(100, 100, 886, 570);
 		frmQunlhang.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmQunlhang.setLocationRelativeTo(null);
@@ -307,7 +307,7 @@ public class QuanLyHangHoa {
 			JOptionPane.showMessageDialog(null, "xin hãy nhập đầy đủ thông tin");
 		}
 	}
-
+	
 	// xóa hàng hóa
 	public void xoaHH() {
 		if (JOptionPane.showConfirmDialog(frmQunlhang, "Bạn có chắc muốn xóa") == JOptionPane.YES_OPTION) {

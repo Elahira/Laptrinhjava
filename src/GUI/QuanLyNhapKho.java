@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -14,19 +15,43 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-import DAO.DNhapKho;
+import BUS.BHangHoa;
+import BUS.BKhoHang;
+import BUS.BNhapKho;
+import DTO.HangHoa;
+import DTO.KhoHang;
 import DTO.NhapKho;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTabbedPane;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class QuanLyNhapKho {
 
 	private JFrame frmqlnkho;
 	private JTable tbNhapkho;
 	private List<NhapKho> nhapkho;
+	private List<HangHoa> hangHoa;
+	private List<KhoHang> kho;
 	private DefaultTableModel model;
-
+	private DefaultTableModel model1;
+	private JTable tbHang;
+	private JTable tbHangNhap;
+	private JComboBox<String> cbKho;
+	private JTextField textField;
+	BNhapKho Bnkho = new BNhapKho();
+	BHangHoa Bhh = new BHangHoa();
+	BKhoHang Bkho = new BKhoHang();
+	private DefaultTableModel model2;
+	int selectedIndex;
+	int s = 0;
 	/**
 	 * Launch the application.
 	 */
@@ -49,44 +74,56 @@ public class QuanLyNhapKho {
 	public QuanLyNhapKho() {
 		initialize();
 		load();
+		loadcombobox();
 	}	
+
+	
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 		frmqlnkho = new JFrame();
-		frmqlnkho.setBounds(100, 100, 832, 556);
+		frmqlnkho.setTitle("Quản lý nhập kho");
+		frmqlnkho.setBounds(100, 100, 870, 607);
 		frmqlnkho.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				
-		JPanel panel = new JPanel();
-		frmqlnkho.getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
+		frmqlnkho.setLocationRelativeTo(null);
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		frmqlnkho.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+//TabThongTin=====================================================================================================================================================================================				
+		JPanel ThongTinNhapKho = new JPanel();
+		tabbedPane.addTab("Thông tin Nhập kho", null, ThongTinNhapKho, null);
+		ThongTinNhapKho.setLayout(null);
 		
 		JLabel lblQuanLyKho = new JLabel("Quản lý nhập kho");
-		lblQuanLyKho.setBounds(320, 26, 84, 14);
-		panel.add(lblQuanLyKho);
+		lblQuanLyKho.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblQuanLyKho.setBounds(336, 11, 177, 25);
+		ThongTinNhapKho.add(lblQuanLyKho);
 		
 		JLabel lblDanhSach = new JLabel("Danh sách nhập kho");
-		lblDanhSach.setBounds(36, 74, 97, 14);
-		panel.add(lblDanhSach);
+		lblDanhSach.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblDanhSach.setBounds(10, 74, 163, 20);
+		ThongTinNhapKho.add(lblDanhSach);
 		
 		JButton btnQuayLai = new JButton("Quay lại");
+		btnQuayLai.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnQuayLai.setBounds(10, 34, 113, 29);
 		btnQuayLai.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main manMain = new Main();
-				Main.main(null);
+				manMain.main(null);
 				frmqlnkho.dispose();
 			}
 		});
-		btnQuayLai.setBounds(36, 22, 71, 23);
-		panel.add(btnQuayLai);
+		ThongTinNhapKho.add(btnQuayLai);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(36, 99, 746, 345);
-		panel.add(scrollPane);
+		scrollPane.setBounds(10, 105, 831, 345);
+		ThongTinNhapKho.add(scrollPane);
 		
 		tbNhapkho = new JTable();
+		tbNhapkho.setRowHeight(30);
 		tbNhapkho.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -94,18 +131,141 @@ public class QuanLyNhapKho {
 				"Mã Nhập Kho", "Ngày Nhập", "Tổng tiền", "Mã Kho"
 			}
 		));
-		tbNhapkho.setFont(new Font("Dialog", Font.PLAIN, 14));
+		tbNhapkho.setFont(new Font("Dialog", Font.PLAIN, 16));
 		model = (DefaultTableModel)tbNhapkho.getModel();
 		scrollPane.setViewportView(tbNhapkho);
+//TabNhapHang======================================================================================================================================================================================
+		JPanel NhapHang = new JPanel();
+		tabbedPane.addTab("Nhập hàng vào kho", null, NhapHang, null);
+		NhapHang.setLayout(null);
+		
+		JScrollPane scrollPaneTren = new JScrollPane();
+		scrollPaneTren.setBounds(10, 42, 830, 158);
+		NhapHang.add(scrollPaneTren);		
+		tbHang = new JTable();
+		tbHang.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ClickAdd();
+			}			
+		});
+		tbHang.setRowHeight(30);
+		tbHang.setFont(new Font("Dialog", Font.PLAIN, 16));
+		tbHang.setModel(new DefaultTableModel(new Object[][] {},
+			new String[] {"Mã hàng", "Tên hàng", "Loại hàng", "Nhà cung cấp", "Giá"}));
+		model1 = (DefaultTableModel)tbHang.getModel();
+		scrollPaneTren.setViewportView(tbHang);
+		
+		JScrollPane scrollPaneDuoi = new JScrollPane();
+		scrollPaneDuoi.setBounds(10, 277, 830, 177);
+		NhapHang.add(scrollPaneDuoi);		
+		tbHangNhap = new JTable();
+		tbHangNhap.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ClickReturn();
+			}			
+		});
+		tbHangNhap.setRowHeight(30);
+		tbHangNhap.setFont(new Font("Dialog", Font.PLAIN, 16));
+		tbHangNhap.setModel(new DefaultTableModel(new Object[][] {},
+			new String[] {"Mã hàng", "Tên hàng", "Loại hàng", "Nhà cung cấp", "Giá", "Số lượng"}));
+		model2 = (DefaultTableModel)tbHangNhap.getModel();
+		scrollPaneDuoi.setViewportView(tbHangNhap);
+		
+		cbKho = new JComboBox<String>();
+		cbKho.setBounds(692, 235, 148, 31);
+		NhapHang.add(cbKho);
+		
+		JLabel lblDanhSachHangHoa = new JLabel("Danh sách hàng hóa");
+		lblDanhSachHangHoa.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblDanhSachHangHoa.setBounds(10, 11, 163, 20);
+		NhapHang.add(lblDanhSachHangHoa);
+		
+		JLabel lblDanhSachHangHoaDuocNhap = new JLabel("Danh sách hàng hóa được nhập");
+		lblDanhSachHangHoaDuocNhap.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblDanhSachHangHoaDuocNhap.setBounds(10, 238, 252, 20);
+		NhapHang.add(lblDanhSachHangHoaDuocNhap);
+		
+		JButton btnThem = new JButton("¯\\_( ͡° ͜ʖ ͡°)_/¯");
+		btnThem.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnThem.setBounds(344, 211, 140, 29);
+		btnThem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+//				try {
+					selectedIndex = tbHangNhap.getSelectedRow();
+					s=s-(int) model2.getValueAt(selectedIndex, 4)* Integer.parseInt((String) model2.getValueAt(selectedIndex, 5));
+					textField.setText(String.valueOf(s));
+					model2.removeRow(selectedIndex);
+//				} catch (Exception e1) {
+//					JOptionPane.showMessageDialog(null, "Không có gì để trả hàng cả");
+//				}
+				
+			}});		
+		NhapHang.add(btnThem);
+		
+		JButton btnXacNhan = new JButton("Xác Nhận");
+		btnXacNhan.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnXacNhan.setBounds(363, 500, 109, 29);
+		btnXacNhan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ThemNKho();
+			}});
+		NhapHang.add(btnXacNhan);
+		
+		textField = new JTextField();
+		textField.setBackground(Color.WHITE);
+		textField.setDisabledTextColor(Color.WHITE);
+		textField.setBorder(new LineBorder(new Color(171, 173, 179), 2));
+		textField.setForeground(Color.BLACK);
+		textField.setHorizontalAlignment(SwingConstants.CENTER);
+		textField.setEditable(false);
+		textField.setFont(new Font("Tahoma", Font.BOLD, 16));
+		textField.setBounds(692, 465, 147, 31);
+		textField.setColumns(10);
+		NhapHang.add(textField);
 	}
 	
 	private void load() {
 		// TODO Auto-generated method stub
-		nhapkho = new DNhapKho().getListNK();
+		nhapkho = Bnkho.listNhapKho();
 		model.setRowCount(0);
 		for(NhapKho nk: nhapkho) {
 			model.addRow(
 				new Object[] {nk.getMaNK(),nk.getNgayNhap(),nk.getTongTien(),nk.getMaKho()});
 		}
+		hangHoa = Bhh.listHangHoa();
+		model1.setRowCount(0);
+		for (HangHoa hh : hangHoa) {
+			model1.addRow(new Object[] { hh.getMaHang(), hh.getTenHang(), hh.getLoaiHang(), hh.getTenNhaCC(), hh.getGia() });
+		}
+	}
+	private void loadcombobox() {
+		// TODO Auto-generated method stub
+		kho = Bkho.listKho();
+		for(KhoHang khoh: kho ) {
+			cbKho.addItem(khoh.getTenKho());
+		}
+	}
+	private void ClickAdd() {
+		// TODO Auto-generated method stub
+		selectedIndex = tbHang.getSelectedRow();	
+		String m = JOptionPane.showInputDialog("");
+//		int n;
+//		n=Integer.parseInt(m);
+		HangHoa hh = hangHoa.get(selectedIndex);
+		model2.addRow(new Object[] { hh.getMaHang(), hh.getTenHang(), hh.getLoaiHang(), hh.getTenNhaCC(), hh.getGia() , m});
+		s=s+(int) model1.getValueAt(selectedIndex, 4)*Integer.parseInt(m);
+		textField.setText(String.valueOf(s));
+//		model1.removeRow(selectedIndex);
+	}
+	private void ClickReturn() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void ThemNKho() {
+		// TODO Auto-generated method stub
+		model2.getDataVector();
 	}
 }

@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import DTO.NhapKho;
 
 public class DNhapKho {
+	
 	ConnectDB connectDB = new ConnectDB();
+	
 	public ArrayList<NhapKho> getListNK() {
 		ArrayList<NhapKho> list = new ArrayList<>();
 		String sql = "select MaNK, NgayNhap, TongTien, MaKho from NhapKho";
