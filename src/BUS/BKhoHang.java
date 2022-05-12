@@ -23,7 +23,7 @@ public class BKhoHang {
 	public boolean suaKho(KhoHang kho) {
 		return Dkho.suaKho(kho);
 	}
-	public int getMancc(String tenKho) {
+	public int getMaKho(String tenKho) {
 		return Dkho.getmaKho(tenKho);
 	}
 }

@@ -18,9 +18,11 @@ import javax.swing.table.DefaultTableModel;
 import BUS.BHangHoa;
 import BUS.BKhoHang;
 import BUS.BNhapKho;
+import BUS.BNhapKhoCT;
 import DTO.HangHoa;
 import DTO.KhoHang;
 import DTO.NhapKho;
+import DTO.NhapKhoCT;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -49,6 +51,7 @@ public class QuanLyNhapKho {
 	BNhapKho Bnkho = new BNhapKho();
 	BHangHoa Bhh = new BHangHoa();
 	BKhoHang Bkho = new BKhoHang();
+	BNhapKhoCT Bnkct = new BNhapKhoCT();
 	private DefaultTableModel model2;
 	int selectedIndex;
 	int s = 0;
@@ -251,21 +254,41 @@ public class QuanLyNhapKho {
 	private void ClickAdd() {
 		// TODO Auto-generated method stub
 		selectedIndex = tbHang.getSelectedRow();	
-		String m = JOptionPane.showInputDialog("");
-//		int n;
-//		n=Integer.parseInt(m);
-		HangHoa hh = hangHoa.get(selectedIndex);
-		model2.addRow(new Object[] { hh.getMaHang(), hh.getTenHang(), hh.getLoaiHang(), hh.getTenNhaCC(), hh.getGia() , m});
-		s=s+(int) model1.getValueAt(selectedIndex, 4)*Integer.parseInt(m);
-		textField.setText(String.valueOf(s));
-//		model1.removeRow(selectedIndex);
+		String m = JOptionPane.showInputDialog("Nhập số lượng");
+		if(m==null) {
+			System.out.print("Lỗi");
+		}else {
+			HangHoa hh = hangHoa.get(selectedIndex);
+			model2.addRow(new Object[] { hh.getMaHang(), hh.getTenHang(), hh.getLoaiHang(), hh.getTenNhaCC(), hh.getGia() , m});
+			s=s+(int) model1.getValueAt(selectedIndex, 4)*Integer.parseInt(m);
+			textField.setText(String.valueOf(s));
+		}
 	}
 	private void ClickReturn() {
 		// TODO Auto-generated method stub
 		
 	}
-	private void ThemNKho() {
-		// TODO Auto-generated method stub
-		model2.getDataVector();
+	private void ThemNKho() {		
+		int rows= model2.getRowCount();
+		System.out.print(rows);
+//		if(rows !=-1) {
+			int row= 0;
+			for(; row < rows; row++) {
+				NhapKhoCT nkct=new NhapKhoCT();
+
+				nkct.setMaHang(Integer.parseInt( model2.getValueAt(row, 0).toString()));
+				nkct.setSoLuong(Integer.parseInt( model2.getValueAt(row, 5).toString()));
+				nkct.setTien(Integer.parseInt( model2.getValueAt(row, 4).toString()));
+				nkct.setMaNK(1);
+				Bnkct.nhapKhoChiTiet(nkct);
+			}
+			NhapKho nk = new NhapKho();
+			nk.setMaKho(Bkho.getMaKho(cbKho.getSelectedItem().toString()));
+			nk.setTongTien(Integer.parseInt(textField.getText()));
+			nk.setNgayNhap(java.time.LocalDate.now().toString());
+			Bnkho.NhapKho(nk);
+//		}else {
+//			JOptionPane.showMessageDialog(null, "Chưa có gì để thêm");
+//		}
 	}
 }

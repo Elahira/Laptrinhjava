@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import DTO.NhapKho;
+import DTO.NhapKhoCT;
 
 public class DNhapKho {
 	
@@ -29,5 +30,18 @@ public class DNhapKho {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	public boolean nhapKho(NhapKho nk) {
+		String sql = "insert into NhapKho ( NgayNhap, TongTien, MaKho) values (?,?,?)";
+		try {
+			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
+			ps.setString(1, nk.getNgayNhap());
+			ps.setInt(2, nk.getTongTien());
+			ps.setInt(3, nk.getMaKho());			
+			ps.executeUpdate();
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 }
