@@ -44,4 +44,15 @@ public class DNhapKho {
 		}
 		return true;
 	}
+	public boolean xoaNKho(int manhapkho) {
+		String sql = "delete from NhapKho where MaNK=?";
+		try {
+			PreparedStatement ps = connectDB.conn.prepareCall(sql);
+			ps.setInt(1, manhapkho);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
 }

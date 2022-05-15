@@ -14,6 +14,7 @@ import java.awt.Font;
 import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import BUS.BHangHoa;
 import BUS.BKhoHang;
@@ -29,11 +30,14 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class QuanLyNhapKho {
 
@@ -47,7 +51,7 @@ public class QuanLyNhapKho {
 	private JTable tbHang;
 	private JTable tbHangNhap;
 	private JComboBox<String> cbKho;
-	private JTextField textField;
+	private JTextField txtTong;
 	BNhapKho Bnkho = new BNhapKho();
 	BHangHoa Bhh = new BHangHoa();
 	BKhoHang Bkho = new BKhoHang();
@@ -55,6 +59,7 @@ public class QuanLyNhapKho {
 	private DefaultTableModel model2;
 	int selectedIndex;
 	int s = 0;
+	private JTextField txtTimKiem;
 	/**
 	 * Launch the application.
 	 */
@@ -137,6 +142,24 @@ public class QuanLyNhapKho {
 		tbNhapkho.setFont(new Font("Dialog", Font.PLAIN, 16));
 		model = (DefaultTableModel)tbNhapkho.getModel();
 		scrollPane.setViewportView(tbNhapkho);
+		
+		JButton btnXoa = new JButton("Xóa");
+		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnXoa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				xoaNK();
+			}
+		});
+		btnXoa.setBounds(752, 34, 87, 29);
+		ThongTinNhapKho.add(btnXoa);
+		
+		JButton btnXemChiTiet = new JButton("Xem Chi Tiết");
+		btnXemChiTiet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnXemChiTiet.setBounds(631, 39, 89, 23);
+		ThongTinNhapKho.add(btnXemChiTiet);
 //TabNhapHang======================================================================================================================================================================================
 		JPanel NhapHang = new JPanel();
 		tabbedPane.addTab("Nhập hàng vào kho", null, NhapHang, null);
@@ -199,7 +222,7 @@ public class QuanLyNhapKho {
 //				try {
 					selectedIndex = tbHangNhap.getSelectedRow();
 					s=s-(int) model2.getValueAt(selectedIndex, 4)* Integer.parseInt((String) model2.getValueAt(selectedIndex, 5));
-					textField.setText(String.valueOf(s));
+					txtTong.setText(String.valueOf(s));
 					model2.removeRow(selectedIndex);
 //				} catch (Exception e1) {
 //					JOptionPane.showMessageDialog(null, "Không có gì để trả hàng cả");
@@ -217,17 +240,34 @@ public class QuanLyNhapKho {
 			}});
 		NhapHang.add(btnXacNhan);
 		
-		textField = new JTextField();
-		textField.setBackground(Color.WHITE);
-		textField.setDisabledTextColor(Color.WHITE);
-		textField.setBorder(new LineBorder(new Color(171, 173, 179), 2));
-		textField.setForeground(Color.BLACK);
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setEditable(false);
-		textField.setFont(new Font("Tahoma", Font.BOLD, 16));
-		textField.setBounds(692, 465, 147, 31);
-		textField.setColumns(10);
-		NhapHang.add(textField);
+		txtTong = new JTextField();
+		txtTong.setBackground(Color.WHITE);
+		txtTong.setDisabledTextColor(Color.WHITE);
+		txtTong.setBorder(new LineBorder(new Color(171, 173, 179), 2));
+		txtTong.setForeground(Color.BLACK);
+		txtTong.setHorizontalAlignment(SwingConstants.CENTER);
+		txtTong.setEditable(false);
+		txtTong.setFont(new Font("Tahoma", Font.BOLD, 16));
+		txtTong.setBounds(692, 465, 147, 31);
+		txtTong.setColumns(10);
+		NhapHang.add(txtTong);
+		
+		JLabel lblTimKiem = new JLabel("Tìm Kiếm:");
+		lblTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblTimKiem.setBounds(231, 11, 85, 20);
+		NhapHang.add(lblTimKiem);
+		
+		txtTimKiem = new JTextField();
+		txtTimKiem.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				filter(txtTimKiem.getText());
+			}			
+		});
+		txtTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtTimKiem.setBounds(311, 8, 217, 26);		
+		txtTimKiem.setColumns(10);
+		NhapHang.add(txtTimKiem);
 	}
 	
 	private void load() {
@@ -251,17 +291,31 @@ public class QuanLyNhapKho {
 			cbKho.addItem(khoh.getTenKho());
 		}
 	}
+	private void filter(String search) {
+		// TODO Auto-generated method stub
+		TableRowSorter<DefaultTableModel> tRowSorter = new TableRowSorter<DefaultTableModel>(model1);
+		tbHang.setRowSorter(tRowSorter);
+		tRowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + search));
+	}
 	private void ClickAdd() {
 		// TODO Auto-generated method stub
 		selectedIndex = tbHang.getSelectedRow();	
 		String m = JOptionPane.showInputDialog("Nhập số lượng");
-		if(m==null) {
+		if(m==null||m.equals("")) {
 			System.out.print("Lỗi");
 		}else {
 			HangHoa hh = hangHoa.get(selectedIndex);
-			model2.addRow(new Object[] { hh.getMaHang(), hh.getTenHang(), hh.getLoaiHang(), hh.getTenNhaCC(), hh.getGia() , m});
-			s=s+(int) model1.getValueAt(selectedIndex, 4)*Integer.parseInt(m);
-			textField.setText(String.valueOf(s));
+//			int a = (int) model1.getValueAt(selectedIndex, 0);
+//			System.out.print(a);
+			
+//			if(model1.getValueAt(selectedIndex, 0)!=model2.getValueAt(0, 0)) {
+				model2.addRow(new Object[] { hh.getMaHang(), hh.getTenHang(), hh.getLoaiHang(), hh.getTenNhaCC(), hh.getGia() , m});
+				s=s+(int) model1.getValueAt(selectedIndex, 4)*Integer.parseInt(m);
+				txtTong.setText(String.valueOf(s));
+				
+//			}else {
+//				model2.setValueAt(m, 0, 5);
+//			}
 		}
 	}
 	private void ClickReturn() {
@@ -270,25 +324,38 @@ public class QuanLyNhapKho {
 	}
 	private void ThemNKho() {		
 		int rows= model2.getRowCount();
-		System.out.print(rows);
-//		if(rows !=-1) {
-			int row= 0;
-			for(; row < rows; row++) {
-				NhapKhoCT nkct=new NhapKhoCT();
 
+		if(rows !=-1) {
+		NhapKho nk = new NhapKho();
+		nk.setMaKho(Bkho.getMaKho(cbKho.getSelectedItem().toString()));
+		nk.setTongTien(Integer.parseInt(txtTong.getText()));
+		nk.setNgayNhap(java.time.LocalDate.now().toString());
+		Bnkho.NhapKho(nk);
+		load();
+		NhapKhoCT nkct=new NhapKhoCT();
+		nkct.setMaNK(nk.getMaNK());
+			int row= 0;
+			for(; row < rows; row++) {				
 				nkct.setMaHang(Integer.parseInt( model2.getValueAt(row, 0).toString()));
 				nkct.setSoLuong(Integer.parseInt( model2.getValueAt(row, 5).toString()));
-				nkct.setTien(Integer.parseInt( model2.getValueAt(row, 4).toString()));
-				nkct.setMaNK(1);
+				nkct.setTien(Integer.parseInt( model2.getValueAt(row, 4).toString()));				
 				Bnkct.nhapKhoChiTiet(nkct);
+			}			
+		}else {
+			JOptionPane.showMessageDialog(null, "Chưa có gì để thêm");
+		}
+	}
+	private void xoaNK() {
+		// TODO Auto-generated method stub
+		if (JOptionPane.showConfirmDialog(frmqlnkho, "Bạn có chắc muốn xóa") == JOptionPane.YES_OPTION) {
+			selectedIndex = tbNhapkho.getSelectedRow();
+			NhapKho nk = nhapkho.get(selectedIndex);
+			if (Bnkho.XoaNhapKho(nk.getMaNK())) {
+				JOptionPane.showMessageDialog(null, "Đã xóa thành công");
+			} else {
+				JOptionPane.showMessageDialog(null, "Xóa không thành công");
 			}
-			NhapKho nk = new NhapKho();
-			nk.setMaKho(Bkho.getMaKho(cbKho.getSelectedItem().toString()));
-			nk.setTongTien(Integer.parseInt(textField.getText()));
-			nk.setNgayNhap(java.time.LocalDate.now().toString());
-			Bnkho.NhapKho(nk);
-//		}else {
-//			JOptionPane.showMessageDialog(null, "Chưa có gì để thêm");
-//		}
+			load();
+		}
 	}
 }
