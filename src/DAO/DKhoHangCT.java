@@ -6,9 +6,11 @@ import java.util.ArrayList;
 
 import DTO.KhoHang;
 import DTO.KhoHangCT;
+import DTO.NhapKho;
 import DTO.NhapKhoCT;
 
 public class DKhoHangCT {
+	public static int temp;
 	ConnectDB connectDB = new ConnectDB();
 
 	// load data kho hàng
@@ -50,27 +52,35 @@ public class DKhoHangCT {
 		return true;
 	}
 	public boolean nhapSL(KhoHangCT khct) {
-		String sql = "update KhoHangCT set  SoLuong = ? where MaKho = ?";
+		String sql = "update KhoHangCT set  SoLuong = ? where MaKho = ? and MaHang = ?";
 		try {
 			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
-			ps.setInt(4, khct.getSoLuong());			
+			ps.setInt(1, khct.getSoLuong());
+			ps.setInt(2, khct.getMaKho());
+			ps.setInt(3, khct.getMaHang());
 			ps.executeUpdate();
 		} catch (Exception e) {
 			return false;
 		}
 		return true;
 	}
-	public boolean isCheck(KhoHangCT khct) {
-		String sql = "select * from  KhoHangCT where MaHang = ? and MaKho =?";		
+	public boolean isCheck(int n, int m) {
+		String sql = "select * from  KhoHangCT where MaKho = ? and MaHang =?";		
 		try {
 			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
+			ps.setInt(1, n);
+			ps.setInt(2, m);
 			ResultSet rs = ps.executeQuery();
-			khct.setMaKho(rs.getInt("MaKho"));
-			khct.setSoLuong(rs.getInt("SoLuong"));
-			
-		} catch (Exception e) {
+			if(rs.next()) {
+				KhoHangCT nk = new KhoHangCT();
+				nk.setSoLuong(rs.getInt("SoLuong"));
+				temp = nk.getSoLuong();
+				return true;
+			}else {
+				return false;
+			}			
+		} catch (Exception e) {			
 			return false;
-		}
-		return true;
+		}		
 	}
 }

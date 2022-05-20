@@ -17,7 +17,7 @@ public class BKhoHangCT {
 	public boolean nhapSL(KhoHangCT khct) {
 		return khoct.nhapSL(khct);
 	}
-	public boolean isChecked(KhoHangCT khct) {
-		return khoct.isCheck(khct);
+	public boolean isChecked(int a, int b) {		
+		return khoct.isCheck(a, b);
 	}
 }

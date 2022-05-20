@@ -8,7 +8,7 @@ import DTO.NhapKho;
 import DTO.NhapKhoCT;
 
 public class DNhapKho {
-	
+	public static int temp;
 	ConnectDB connectDB = new ConnectDB();
 	
 	public ArrayList<NhapKho> getListNK() {
@@ -20,10 +20,10 @@ public class DNhapKho {
 			while (rs.next()) {
 				NhapKho nk = new NhapKho();
 				nk.setMaNK(rs.getInt("MaNK"));
+				temp = nk.getMaNK();
 				nk.setNgayNhap(rs.getString("NgayNhap"));
 				nk.setTongTien(rs.getInt("TongTien"));
 				nk.setMaKho(rs.getInt("MaKho"));
-				
 				list.add(nk);
 			}
 		} catch (Exception e) {

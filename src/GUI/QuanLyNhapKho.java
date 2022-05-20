@@ -18,10 +18,14 @@ import javax.swing.table.TableRowSorter;
 
 import BUS.BHangHoa;
 import BUS.BKhoHang;
+import BUS.BKhoHangCT;
 import BUS.BNhapKho;
 import BUS.BNhapKhoCT;
+import DAO.DKhoHangCT;
+import DAO.DNhapKho;
 import DTO.HangHoa;
 import DTO.KhoHang;
+import DTO.KhoHangCT;
 import DTO.NhapKho;
 import DTO.NhapKhoCT;
 
@@ -56,6 +60,8 @@ public class QuanLyNhapKho {
 	BHangHoa Bhh = new BHangHoa();
 	BKhoHang Bkho = new BKhoHang();
 	BNhapKhoCT Bnkct = new BNhapKhoCT();
+	DKhoHangCT dk=new DKhoHangCT();
+	BKhoHangCT Bkhoct = new BKhoHangCT();
 	private DefaultTableModel model2;
 	int selectedIndex;
 	int s = 0;
@@ -333,13 +339,29 @@ public class QuanLyNhapKho {
 		Bnkho.NhapKho(nk);
 		load();
 		NhapKhoCT nkct=new NhapKhoCT();
-		nkct.setMaNK(nk.getMaNK());
+		nkct.setMaNK(DNhapKho.temp);
+		KhoHangCT khct = new KhoHangCT();
+		khct.setMaKho(nk.getMaKho());
 			int row= 0;
 			for(; row < rows; row++) {				
 				nkct.setMaHang(Integer.parseInt( model2.getValueAt(row, 0).toString()));
 				nkct.setSoLuong(Integer.parseInt( model2.getValueAt(row, 5).toString()));
-				nkct.setTien(Integer.parseInt( model2.getValueAt(row, 4).toString()));				
+				nkct.setTien(Integer.parseInt( model2.getValueAt(row, 4).toString()));			
 				Bnkct.nhapKhoChiTiet(nkct);
+				int n,m;
+				n=Integer.parseInt( model2.getValueAt(row, 0).toString());
+				m=Bkho.getMaKho(cbKho.getSelectedItem().toString());
+				khct.setMaHang(nkct.getMaHang());
+				if(Bkhoct.isChecked(m,n)) {
+					int s = DKhoHangCT.temp + Integer.parseInt( model2.getValueAt(row, 5).toString());
+					khct.setSoLuong(s);
+					Bkhoct.nhapSL(khct);
+					System.out.print("Oke");
+				}else {
+					khct.setSoLuong(nkct.getSoLuong());
+					Bkhoct.nhapKhoHang(khct);
+					System.out.print("Ko");
+				}
 			}			
 		}else {
 			JOptionPane.showMessageDialog(null, "Chưa có gì để thêm");
