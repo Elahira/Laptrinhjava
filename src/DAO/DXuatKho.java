@@ -4,9 +4,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import DTO.NhapKho;
 import DTO.XuatKho;
 
 public class DXuatKho {
+	public static int temp;
 	ConnectDB connectDB = new ConnectDB();
 	public ArrayList<XuatKho> getListXK() {
 		ArrayList<XuatKho> list = new ArrayList<>();
@@ -17,6 +19,7 @@ public class DXuatKho {
 			while (rs.next()) {
 				XuatKho xk = new XuatKho();
 				xk.setMaXK(rs.getInt("MaXK"));
+				temp = xk.getMaXK();
 				xk.setNgayXuat(rs.getString("NgayXuat"));
 				xk.setTongTien(rs.getInt("TongTien"));
 				xk.setMaKho(rs.getInt("MaKho"));
@@ -27,5 +30,18 @@ public class DXuatKho {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	public boolean xuatKho(XuatKho xk) {
+		String sql = "insert into XuatKho ( NgayXuat, TongTien, MaKho) values (?,?,?)";
+		try {
+			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
+			ps.setString(1, xk.getNgayXuat());
+			ps.setInt(2, xk.getTongTien());
+			ps.setInt(3, xk.getMaKho());			
+			ps.executeUpdate();
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 }

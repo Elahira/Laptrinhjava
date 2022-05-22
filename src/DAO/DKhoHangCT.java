@@ -38,6 +38,27 @@ public class DKhoHangCT {
 		}
 		return list;
 	}
+	public ArrayList<KhoHangCT> getListUpTable() {
+		ArrayList<KhoHangCT> list = new ArrayList<>();
+		String sql = "select TenKho, KhoHangCT.MaHang, TenHang, LoaiHang, Gia,  SoLuong from KhoHangCT,  HangHoa,KhoHang where  KhoHangCT.MaHang = HangHoa.MaHang and KhoHangCT.MaKho = KhoHang.MaKho";
+		try {
+			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				KhoHangCT khoct = new KhoHangCT();
+				khoct.setTenKho(rs.getString("TenKho"));
+				khoct.setMaHang(rs.getInt("MaHang"));
+				khoct.setTenHang(rs.getString("TenHang"));
+				khoct.setLoaiHang(rs.getString("LoaiHang"));
+				khoct.setGia(rs.getInt("Gia"));
+				khoct.setSoLuong(rs.getInt("SoLuong"));
+				list.add(khoct);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 	public boolean nhapKho(KhoHangCT khct) {
 		String sql = "insert into KhoHangCT (MaKho, MaHang, SoLuong) values (?,?,?)";
 		try {
@@ -72,9 +93,9 @@ public class DKhoHangCT {
 			ps.setInt(2, m);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
-				KhoHangCT nk = new KhoHangCT();
-				nk.setSoLuong(rs.getInt("SoLuong"));
-				temp = nk.getSoLuong();
+				KhoHangCT khct = new KhoHangCT();
+				khct.setSoLuong(rs.getInt("SoLuong"));
+				temp = khct.getSoLuong();
 				return true;
 			}else {
 				return false;
@@ -82,5 +103,17 @@ public class DKhoHangCT {
 		} catch (Exception e) {			
 			return false;
 		}		
+	}
+	public boolean xoaHTK(int mahang, int makho) {
+		String sql = "delete from KhoHangCT where MaHang=? and MaKho = ?";
+		try {
+			PreparedStatement ps = connectDB.conn.prepareCall(sql);
+			ps.setInt(1, mahang);
+			ps.setInt(2, makho);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 }

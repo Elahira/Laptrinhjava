@@ -14,7 +14,7 @@ public class BNhapKho {
 	public boolean NhapKho(NhapKho nk) {
 		return Dnkho.nhapKho(nk);
 	}
-	public boolean XoaNhapKho(int manhapkho) {
-		return Dnkho.xoaNKho(manhapkho);
-	}
+//	public boolean XoaNhapKho(int manhapkho) {
+//		return Dnkho.xoaNKho(manhapkho);
+//	}
 }

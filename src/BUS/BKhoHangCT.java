@@ -20,4 +20,11 @@ public class BKhoHangCT {
 	public boolean isChecked(int a, int b) {		
 		return khoct.isCheck(a, b);
 	}
+	
+	public List<KhoHangCT> listuptable(){
+		return khoct.getListUpTable();		
+	}
+	public boolean xoaHangTrongKho(int mahang,int makho) {
+		return khoct.xoaHTK(mahang,makho);
+	}
 }

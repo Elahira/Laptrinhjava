@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import DTO.NhapKho;
-import DTO.NhapKhoCT;
 
 public class DNhapKho {
 	public static int temp;
@@ -31,6 +30,7 @@ public class DNhapKho {
 		}
 		return list;
 	}
+	
 	public boolean nhapKho(NhapKho nk) {
 		String sql = "insert into NhapKho ( NgayNhap, TongTien, MaKho) values (?,?,?)";
 		try {
@@ -44,15 +44,15 @@ public class DNhapKho {
 		}
 		return true;
 	}
-	public boolean xoaNKho(int manhapkho) {
-		String sql = "delete from NhapKho where MaNK=?";
-		try {
-			PreparedStatement ps = connectDB.conn.prepareCall(sql);
-			ps.setInt(1, manhapkho);
-			ps.executeUpdate();
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
+//	public boolean xoaNKho(int manhapkho) {
+//		String sql = "delete from NhapKho where MaNK=?";
+//		try {
+//			PreparedStatement ps = connectDB.conn.prepareCall(sql);
+//			ps.setInt(1, manhapkho);
+//			ps.executeUpdate();
+//		} catch (Exception e) {
+//			return false;
+//		}
+//		return true;
+//	}
 }

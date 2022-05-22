@@ -149,16 +149,6 @@ public class QuanLyNhapKho {
 		model = (DefaultTableModel)tbNhapkho.getModel();
 		scrollPane.setViewportView(tbNhapkho);
 		
-		JButton btnXoa = new JButton("Xóa");
-		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnXoa.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				xoaNK();
-			}
-		});
-		btnXoa.setBounds(752, 34, 87, 29);
-		ThongTinNhapKho.add(btnXoa);
-		
 		JButton btnXemChiTiet = new JButton("Xem Chi Tiết");
 		btnXemChiTiet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -365,19 +355,6 @@ public class QuanLyNhapKho {
 			}			
 		}else {
 			JOptionPane.showMessageDialog(null, "Chưa có gì để thêm");
-		}
-	}
-	private void xoaNK() {
-		// TODO Auto-generated method stub
-		if (JOptionPane.showConfirmDialog(frmqlnkho, "Bạn có chắc muốn xóa") == JOptionPane.YES_OPTION) {
-			selectedIndex = tbNhapkho.getSelectedRow();
-			NhapKho nk = nhapkho.get(selectedIndex);
-			if (Bnkho.XoaNhapKho(nk.getMaNK())) {
-				JOptionPane.showMessageDialog(null, "Đã xóa thành công");
-			} else {
-				JOptionPane.showMessageDialog(null, "Xóa không thành công");
-			}
-			load();
 		}
 	}
 }
