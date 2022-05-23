@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import BUS.BHangHoa;
+import BUS.BKhachHang;
 import BUS.BKhoHang;
 import BUS.BKhoHangCT;
 import BUS.BNhapKho;
@@ -30,13 +31,12 @@ import BUS.BNhapKhoCT;
 import BUS.BXuatKho;
 import BUS.BXuatKhoCT;
 import DAO.DKhoHangCT;
-import DAO.DNhapKho;
 import DAO.DXuatKho;
 import DTO.HangHoa;
+import DTO.KhachHang;
 import DTO.KhoHang;
 import DTO.KhoHangCT;
 import DTO.NhapKho;
-import DTO.NhapKhoCT;
 import DTO.XuatKho;
 import DTO.XuatKhoCT;
 
@@ -56,12 +56,12 @@ public class QuanLyXuatKho {
 	private DefaultTableModel model1;
 	private DefaultTableModel model2;
 	private List<KhoHangCT> khoct;
-	private List<HangHoa> hangHoa;
 	private List<KhoHang> kho;	
-	
+	private List<KhachHang> kh;
 	private JTable tbHang;
 	private JTable tbHangXuat;
 	private JComboBox<String> cbKho;
+	private JComboBox<String> cbH;
 	private JTextField txtTong;
 	BNhapKho Bnkho = new BNhapKho();
 	BXuatKho Bxkho = new BXuatKho();
@@ -71,7 +71,8 @@ public class QuanLyXuatKho {
 	BXuatKhoCT Bxkct = new BXuatKhoCT();
 	DKhoHangCT dk=new DKhoHangCT();
 	BKhoHangCT Bkhoct = new BKhoHangCT();
-	
+	BKhachHang Bkh = new BKhachHang();
+	public static int xemchitiet;
 	int selectedIndex;
 	int s = 0;
 	private JTextField txtTimKiem;
@@ -142,12 +143,24 @@ public class QuanLyXuatKho {
 		ThongTinXuatKho.add(scrollPane);
 		
 		tbXuatkho = new JTable();
+		tbXuatkho.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ClickCell();
+			}
+			private void ClickCell() {
+				// TODO Auto-generated method stub
+				selectedIndex = tbXuatkho.getSelectedRow();
+				XuatKho nkho = xuatkho.get(selectedIndex);
+				xemchitiet = nkho.getMaXK();
+			}
+		});
 		tbXuatkho.setRowHeight(30);
 		tbXuatkho.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"Mã Xuất Kho", "Ngày Xuất", "Tổng tiền", "Mã Kho"
+				"Mã Xuất Kho", "Ngày Xuất", "Tổng tiền","Mã Khách Hàng", "Mã Kho"
 			}
 		));
 		tbXuatkho.setFont(new Font("Dialog", Font.PLAIN, 16));
@@ -157,6 +170,18 @@ public class QuanLyXuatKho {
 		JButton btnXemChiTiet = new JButton("Xem Chi Tiết");
 		btnXemChiTiet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				xemChiTietXuat();
+			}
+
+			private void xemChiTietXuat() {
+				// TODO Auto-generated method stub
+				if(tbXuatkho.getSelectedRow()!=-1) {
+					ChiTietXuatKho ctnk = new ChiTietXuatKho();
+					ctnk.frmchitietxuatkho();
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Xin hãy chọn một kho để xem");
+				}
 			}
 		});
 		btnXemChiTiet.setBounds(631, 39, 89, 23);
@@ -272,6 +297,10 @@ public class QuanLyXuatKho {
 		txtTimKiem.setBounds(311, 8, 217, 26);		
 		txtTimKiem.setColumns(10);
 		XuatHang.add(txtTimKiem);
+		
+		cbH = new JComboBox<String>();
+		cbH.setBounds(692, 239, 148, 26);
+		XuatHang.add(cbH);
 	}
 	
 	private void load() {
@@ -280,7 +309,13 @@ public class QuanLyXuatKho {
 		model.setRowCount(0);
 		for(XuatKho xk: xuatkho) {
 			model.addRow(
-				new Object[] {xk.getMaXK(),xk.getNgayXuat(),xk.getTongTien(),xk.getMaKho()});
+				new Object[] {xk.getMaXK(),xk.getNgayXuat(),xk.getTongTien(),xk.getMaKH(),xk.getTenKho()});
+		}
+		khoct = Bkhoct.listuptable();
+		model1.setRowCount(0);
+		for(KhoHangCT khoct: khoct) {
+			model1.addRow(
+					new Object[] {khoct.getTenKho(), khoct.getMaHang(),khoct.getTenHang(),khoct.getLoaiHang(),khoct.getGia(),khoct.getSoLuong()});
 		}
 		
 	}
@@ -290,11 +325,11 @@ public class QuanLyXuatKho {
 		for(KhoHang khoh: kho ) {
 			cbKho.addItem(khoh.getTenKho());
 		}
-		khoct = Bkhoct.listuptable();
-		for(KhoHangCT khoct: khoct) {
-			model1.addRow(
-					new Object[] {khoct.getTenKho(), khoct.getMaHang(),khoct.getTenHang(),khoct.getLoaiHang(),khoct.getGia(),khoct.getSoLuong()});
+		kh = Bkh.listKhachHang();
+		for(KhachHang khachhang: kh) {
+			cbH.addItem(khachhang.getTenKH());
 		}
+		
 	}
 	private void filter(String search) {
 		// TODO Auto-generated method stub
@@ -331,6 +366,8 @@ public class QuanLyXuatKho {
 		xk.setMaKho(Bkho.getMaKho(cbKho.getSelectedItem().toString()));
 		xk.setTongTien(Integer.parseInt(txtTong.getText()));
 		xk.setNgayXuat(java.time.LocalDate.now().toString());
+		xk.setMaKH(Bkh.getMaHang(cbH.getSelectedItem().toString()));
+//		System.out.println(Bkh.getMaHang(cbH.getSelectedItem().toString()));
 		Bxkho.XuatKho(xk);
 		load();
 		XuatKhoCT xkct=new XuatKhoCT();

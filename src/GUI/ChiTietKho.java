@@ -74,12 +74,10 @@ public class ChiTietKho {
 		
 		tbKhoct = new JTable();
 		tbKhoct.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
+			new Object[][] {},
 			new String[] {
-				"Mã", "Tên hàng", "Loại hàng", "Kho", "Giá tiền", "Số lượng", "Tổng tiền hàng"
-			}
-		) {
+				"Mã", "Tên hàng", "Loại hàng", "Kho", "Giá tiền", "Số lượng", "Tổng tiền hàng"})
+			{
 			boolean[] columnEditables = new boolean[] {
 				false, false, false, false, false, false, false
 			};

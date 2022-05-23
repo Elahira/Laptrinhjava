@@ -6,7 +6,20 @@ public class NhapKhoCT {
 	private int SoLuong;
 	private int Tien;
 	private int MaNKCT;
-	
+	private String TenHang;
+	private String LoaiHang;
+	public String getTenHang() {
+		return TenHang;
+	}
+	public void setTenHang(String tenHang) {
+		TenHang = tenHang;
+	}
+	public String getLoaiHang() {
+		return LoaiHang;
+	}
+	public void setLoaiHang(String loaiHang) {
+		LoaiHang = loaiHang;
+	}
 	public int getMaNK() {
 		return MaNK;
 	}

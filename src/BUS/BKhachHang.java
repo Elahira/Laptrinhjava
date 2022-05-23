@@ -23,5 +23,7 @@ public class BKhachHang {
 	public boolean suaKhachHang(KhachHang kh) {
 		return Dkh.suaKH(kh);
 	}
-
+	public int getMaHang(String tenhang) {
+		return Dkh.getmaHang(tenhang);
+	}
 }

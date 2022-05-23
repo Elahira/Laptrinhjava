@@ -5,7 +5,24 @@ public class XuatKho {
 	private String NgayXuat;
 	private int TongTien;
 	private int MaKho;
-	
+	private int MaKH;
+	public String TenKho;
+	public String getTenKho() {
+		return TenKho;
+	}
+
+	public void setTenKho(String tenKho) {
+		TenKho = tenKho;
+	}
+
+	public int getMaKH() {
+		return MaKH;
+	}
+
+	public void setMaKH(int maKH) {
+		MaKH = maKH;
+	}
+
 	public int getMaXK() {
 		return MaXK;
 	}

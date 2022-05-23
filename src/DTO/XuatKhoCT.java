@@ -6,7 +6,20 @@ public class XuatKhoCT {
 	private int SoLuong;
 	private int Tien;
 	private int MaXKCT;
-	
+	private String TenHang;
+	private String LoaiHang;
+	public String getTenHang() {
+		return TenHang;
+	}
+	public void setTenHang(String tenHang) {
+		TenHang = tenHang;
+	}
+	public String getLoaiHang() {
+		return LoaiHang;
+	}
+	public void setLoaiHang(String loaiHang) {
+		LoaiHang = loaiHang;
+	}
 	public int getMaXK() {
 		return MaXK;
 	}

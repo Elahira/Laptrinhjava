@@ -66,6 +66,7 @@ public class QuanLyNhapKho {
 	int selectedIndex;
 	int s = 0;
 	private JTextField txtTimKiem;
+	public static int xemchitiet;
 	/**
 	 * Launch the application.
 	 */
@@ -137,6 +138,19 @@ public class QuanLyNhapKho {
 		ThongTinNhapKho.add(scrollPane);
 		
 		tbNhapkho = new JTable();
+		tbNhapkho.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ClickCell();
+			}
+
+			private void ClickCell() {
+				// TODO Auto-generated method stub
+				selectedIndex = tbNhapkho.getSelectedRow();
+				NhapKho nkho = nhapkho.get(selectedIndex);
+				xemchitiet = nkho.getMaNK();
+			}
+		});
 		tbNhapkho.setRowHeight(30);
 		tbNhapkho.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -152,6 +166,18 @@ public class QuanLyNhapKho {
 		JButton btnXemChiTiet = new JButton("Xem Chi Tiết");
 		btnXemChiTiet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				xemChiTietNhap();
+			}
+
+			private void xemChiTietNhap() {
+				// TODO Auto-generated method stub
+				if(tbNhapkho.getSelectedRow()!=-1) {
+					ChiTietNhapKho ctnk = new ChiTietNhapKho();
+					ctnk.frmchitietnhapkho();
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Xin hãy chọn một kho để xem");
+				}
 			}
 		});
 		btnXemChiTiet.setBounds(631, 39, 89, 23);
@@ -302,8 +328,7 @@ public class QuanLyNhapKho {
 		}else {
 			HangHoa hh = hangHoa.get(selectedIndex);
 //			int a = (int) model1.getValueAt(selectedIndex, 0);
-//			System.out.print(a);
-			
+//			System.out.print(a);			
 //			if(model1.getValueAt(selectedIndex, 0)!=model2.getValueAt(0, 0)) {
 				model2.addRow(new Object[] { hh.getMaHang(), hh.getTenHang(), hh.getLoaiHang(), hh.getTenNhaCC(), hh.getGia() , m});
 				s=s+(int) model1.getValueAt(selectedIndex, 4)*Integer.parseInt(m);
@@ -352,7 +377,9 @@ public class QuanLyNhapKho {
 					Bkhoct.nhapKhoHang(khct);
 					System.out.print("Ko");
 				}
-			}			
+				
+			}
+		
 		}else {
 			JOptionPane.showMessageDialog(null, "Chưa có gì để thêm");
 		}

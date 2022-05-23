@@ -76,5 +76,19 @@ public class DKhachHang {
 		}
 		return true;
 	}
-
+	public int getmaHang(String tenhang) {
+		int id = 0;
+		String sql = "select MaKH from KhachHang where TenKH = ?";
+		try {
+			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
+			ps.setString(1, tenhang);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				id = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
 }

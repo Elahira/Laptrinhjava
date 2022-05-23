@@ -12,7 +12,7 @@ public class DXuatKho {
 	ConnectDB connectDB = new ConnectDB();
 	public ArrayList<XuatKho> getListXK() {
 		ArrayList<XuatKho> list = new ArrayList<>();
-		String sql = "select MaXK, NgayXuat, TongTien, MaKho from XuatKho";
+		String sql = "select MaXK, NgayXuat, TongTien, MaKH,TenKho from XuatKho,KhoHang where XuatKho.MaKho=KhoHang.MaKho";
 		try {
 			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -22,7 +22,8 @@ public class DXuatKho {
 				temp = xk.getMaXK();
 				xk.setNgayXuat(rs.getString("NgayXuat"));
 				xk.setTongTien(rs.getInt("TongTien"));
-				xk.setMaKho(rs.getInt("MaKho"));
+				xk.setMaKH(rs.getInt("MaKH"));
+				xk.setTenKho(rs.getString("TenKho"));
 				
 				list.add(xk);
 			}
@@ -32,12 +33,13 @@ public class DXuatKho {
 		return list;
 	}
 	public boolean xuatKho(XuatKho xk) {
-		String sql = "insert into XuatKho ( NgayXuat, TongTien, MaKho) values (?,?,?)";
+		String sql = "insert into XuatKho ( NgayXuat, TongTien, MaKH, MaKho) values (?,?,?,?)";
 		try {
 			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
 			ps.setString(1, xk.getNgayXuat());
 			ps.setInt(2, xk.getTongTien());
-			ps.setInt(3, xk.getMaKho());			
+			ps.setInt(3, xk.getMaKH());
+			ps.setInt(4, xk.getMaKho());			
 			ps.executeUpdate();
 		} catch (Exception e) {
 			return false;
