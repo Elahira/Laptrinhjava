@@ -122,6 +122,8 @@ public class QuanLyNhapKho {
 		ThongTinNhapKho.add(lblDanhSach);
 		
 		JButton btnQuayLai = new JButton("Quay lại");
+		btnQuayLai.setForeground(Color.WHITE);
+		btnQuayLai.setBackground(new Color(255, 102, 0));
 		btnQuayLai.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnQuayLai.setBounds(10, 34, 113, 29);
 		btnQuayLai.addActionListener(new ActionListener() {
@@ -156,7 +158,7 @@ public class QuanLyNhapKho {
 			new Object[][] {
 			},
 			new String[] {
-				"Mã Nhập Kho", "Ngày Nhập", "Tổng tiền", "Mã Kho"
+				"Mã Nhập Kho", "Ngày Nhập", "Tổng tiền", "Tên Kho"
 			}
 		));
 		tbNhapkho.setFont(new Font("Dialog", Font.PLAIN, 16));
@@ -164,6 +166,9 @@ public class QuanLyNhapKho {
 		scrollPane.setViewportView(tbNhapkho);
 		
 		JButton btnXemChiTiet = new JButton("Xem Chi Tiết");
+		btnXemChiTiet.setForeground(Color.WHITE);
+		btnXemChiTiet.setBackground(new Color(51, 0, 204));
+		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnXemChiTiet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				xemChiTietNhap();
@@ -180,7 +185,7 @@ public class QuanLyNhapKho {
 				}
 			}
 		});
-		btnXemChiTiet.setBounds(631, 39, 89, 23);
+		btnXemChiTiet.setBounds(631, 39, 163, 41);
 		ThongTinNhapKho.add(btnXemChiTiet);
 //TabNhapHang======================================================================================================================================================================================
 		JPanel NhapHang = new JPanel();
@@ -227,7 +232,7 @@ public class QuanLyNhapKho {
 		
 		JLabel lblDanhSachHangHoa = new JLabel("Danh sách hàng hóa");
 		lblDanhSachHangHoa.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblDanhSachHangHoa.setBounds(10, 11, 163, 20);
+		lblDanhSachHangHoa.setBounds(10, 11, 190, 20);
 		NhapHang.add(lblDanhSachHangHoa);
 		
 		JLabel lblDanhSachHangHoaDuocNhap = new JLabel("Danh sách hàng hóa được nhập");
@@ -298,7 +303,7 @@ public class QuanLyNhapKho {
 		model.setRowCount(0);
 		for(NhapKho nk: nhapkho) {
 			model.addRow(
-				new Object[] {nk.getMaNK(),nk.getNgayNhap(),nk.getTongTien(),nk.getMaKho()});
+				new Object[] {nk.getMaNK(),nk.getNgayNhap(),nk.getTongTien(),nk.getTenKho()});
 		}
 		hangHoa = Bhh.listHangHoa();
 		model1.setRowCount(0);
@@ -379,7 +384,7 @@ public class QuanLyNhapKho {
 				}
 				
 			}
-		
+			JOptionPane.showMessageDialog(null, "Thêm thành công");
 		}else {
 			JOptionPane.showMessageDialog(null, "Chưa có gì để thêm");
 		}

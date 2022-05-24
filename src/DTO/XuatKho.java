@@ -7,6 +7,15 @@ public class XuatKho {
 	private int MaKho;
 	private int MaKH;
 	public String TenKho;
+	public String TenKH;
+	public String getTenKH() {
+		return TenKH;
+	}
+
+	public void setTenKH(String tenKH) {
+		TenKH = tenKH;
+	}
+
 	public String getTenKho() {
 		return TenKho;
 	}

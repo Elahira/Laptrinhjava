@@ -12,7 +12,7 @@ public class DNhapKho {
 	
 	public ArrayList<NhapKho> getListNK() {
 		ArrayList<NhapKho> list = new ArrayList<>();
-		String sql = "select MaNK, NgayNhap, TongTien, MaKho from NhapKho";
+		String sql = "select MaNK, NgayNhap, TongTien, TenKho from NhapKho, KhoHang where NhapKho.MaKho = KhoHang.MaKho";
 		try {
 			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -21,8 +21,8 @@ public class DNhapKho {
 				nk.setMaNK(rs.getInt("MaNK"));
 				temp = nk.getMaNK();
 				nk.setNgayNhap(rs.getString("NgayNhap"));
-				nk.setTongTien(rs.getInt("TongTien"));
-				nk.setMaKho(rs.getInt("MaKho"));
+				nk.setTongTien(rs.getInt("TongTien"));				
+				nk.setTenKho(rs.getString("TenKho"));
 				list.add(nk);
 			}
 		} catch (Exception e) {

@@ -70,7 +70,7 @@ public class ChiTietXuatKho {
 		table.setModel(new DefaultTableModel(
 			new Object[][] {},
 			new String[] {
-				"MaXKCT","MaXK", "Ten Hang", "Mã Hàng", "Số Lượng", "Tiền"}){
+				"MaXKCT","MaXK", "Tên Hàng", "Mã Hàng", "Số Lượng", "Tiền"}){
 			boolean[] columnEditables = new boolean[] {
 				false, false, false, false, false, false, false
 			};

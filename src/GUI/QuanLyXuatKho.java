@@ -113,7 +113,7 @@ public class QuanLyXuatKho {
 		frmqlxkho.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 //TabThongTin=====================================================================================================================================================================================				
 		JPanel ThongTinXuatKho = new JPanel();
-		tabbedPane.addTab("Thông tin Nhập kho", null, ThongTinXuatKho, null);
+		tabbedPane.addTab("Thông tin Xuất kho", null, ThongTinXuatKho, null);
 		ThongTinXuatKho.setLayout(null);
 		
 		JLabel lblQuanLyKho = new JLabel("Quản lý xuất kho");
@@ -127,6 +127,8 @@ public class QuanLyXuatKho {
 		ThongTinXuatKho.add(lblDanhSach);
 		
 		JButton btnQuayLai = new JButton("Quay lại");
+		btnQuayLai.setForeground(Color.WHITE);
+		btnQuayLai.setBackground(new Color(255, 102, 0));
 		btnQuayLai.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnQuayLai.setBounds(10, 34, 113, 29);
 		btnQuayLai.addActionListener(new ActionListener() {
@@ -160,7 +162,7 @@ public class QuanLyXuatKho {
 			new Object[][] {
 			},
 			new String[] {
-				"Mã Xuất Kho", "Ngày Xuất", "Tổng tiền","Mã Khách Hàng", "Mã Kho"
+				"Mã Xuất Kho", "Ngày Xuất", "Tổng tiền","Tên Khách Hàng", "Tên Kho"
 			}
 		));
 		tbXuatkho.setFont(new Font("Dialog", Font.PLAIN, 16));
@@ -168,6 +170,9 @@ public class QuanLyXuatKho {
 		scrollPane.setViewportView(tbXuatkho);
 		
 		JButton btnXemChiTiet = new JButton("Xem Chi Tiết");
+		btnXemChiTiet.setForeground(Color.WHITE);
+		btnXemChiTiet.setBackground(new Color(51, 0, 204));
+		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnXemChiTiet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				xemChiTietXuat();
@@ -184,11 +189,11 @@ public class QuanLyXuatKho {
 				}
 			}
 		});
-		btnXemChiTiet.setBounds(631, 39, 89, 23);
+		btnXemChiTiet.setBounds(631, 39, 163, 41);
 		ThongTinXuatKho.add(btnXemChiTiet);
 //TabNhapHang======================================================================================================================================================================================
 		JPanel XuatHang = new JPanel();
-		tabbedPane.addTab("Nhập hàng vào kho", null, XuatHang, null);
+		tabbedPane.addTab("Xuất hàng ra kho", null, XuatHang, null);
 		XuatHang.setLayout(null);
 		
 		JScrollPane scrollPaneTren = new JScrollPane();
@@ -234,9 +239,9 @@ public class QuanLyXuatKho {
 		cbKho.setBounds(692, 8, 148, 26);
 		XuatHang.add(cbKho);
 		
-		JLabel lblDanhSachHangHoa = new JLabel("Danh sách hàng hóa trong kho");
+		JLabel lblDanhSachHangHoa = new JLabel("Danh sách hàng hóa");
 		lblDanhSachHangHoa.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblDanhSachHangHoa.setBounds(10, 11, 163, 20);
+		lblDanhSachHangHoa.setBounds(10, 11, 211, 20);
 		XuatHang.add(lblDanhSachHangHoa);
 		
 		JLabel lblDanhSachHangHoaDuocNhap = new JLabel("Danh sách hàng hóa được chọn");
@@ -309,7 +314,7 @@ public class QuanLyXuatKho {
 		model.setRowCount(0);
 		for(XuatKho xk: xuatkho) {
 			model.addRow(
-				new Object[] {xk.getMaXK(),xk.getNgayXuat(),xk.getTongTien(),xk.getMaKH(),xk.getTenKho()});
+				new Object[] {xk.getMaXK(),xk.getNgayXuat(),xk.getTongTien(),xk.getTenKH(),xk.getTenKho()});
 		}
 		khoct = Bkhoct.listuptable();
 		model1.setRowCount(0);
@@ -396,7 +401,8 @@ public class QuanLyXuatKho {
 				}else {
 					
 				}
-			}			
+			}
+			JOptionPane.showMessageDialog(null, "Thêm thành công");
 		}else {
 			JOptionPane.showMessageDialog(null, "Chưa có gì để thêm");
 		}

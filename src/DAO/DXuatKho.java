@@ -12,7 +12,7 @@ public class DXuatKho {
 	ConnectDB connectDB = new ConnectDB();
 	public ArrayList<XuatKho> getListXK() {
 		ArrayList<XuatKho> list = new ArrayList<>();
-		String sql = "select MaXK, NgayXuat, TongTien, MaKH,TenKho from XuatKho,KhoHang where XuatKho.MaKho=KhoHang.MaKho";
+		String sql = "select MaXK, NgayXuat, TongTien, TenKH,TenKho from XuatKho,KhoHang,KhachHang where XuatKho.MaKho=KhoHang.MaKho and XuatKho.MaKH = KhachHang.MaKH";
 		try {
 			PreparedStatement ps = connectDB.conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -22,7 +22,7 @@ public class DXuatKho {
 				temp = xk.getMaXK();
 				xk.setNgayXuat(rs.getString("NgayXuat"));
 				xk.setTongTien(rs.getInt("TongTien"));
-				xk.setMaKH(rs.getInt("MaKH"));
+				xk.setTenKH(rs.getString("TenKH"));
 				xk.setTenKho(rs.getString("TenKho"));
 				
 				list.add(xk);

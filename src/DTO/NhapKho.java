@@ -5,7 +5,16 @@ public class NhapKho {
 	private String NgayNhap;
 	private int TongTien;
 	private int MaKho;
+	private String TenKho;
 	
+	public String getTenKho() {
+		return TenKho;
+	}
+
+	public void setTenKho(String tenKho) {
+		TenKho = tenKho;
+	}
+
 	public int getMaNK() {
 		return MaNK;
 	}
